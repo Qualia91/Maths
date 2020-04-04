@@ -20,11 +20,11 @@ public class Vec3d {
 		this.z = z;
 	}
 
-	// Create a restricted vector. user for limiting momentums
-	public Vec3d(Vec3d momentumUnrestricted, double linearSpeedLimit) {
-		x = Math.min(momentumUnrestricted.getX(), linearSpeedLimit);
-		y = Math.min(momentumUnrestricted.getY(), linearSpeedLimit);
-		z = Math.min(momentumUnrestricted.getZ(), linearSpeedLimit);
+	// Create a restricted vector
+	public Vec3d(Vec3d momentumUnrestricted, double limit) {
+		x = Math.min(momentumUnrestricted.getX(), limit);
+		y = Math.min(momentumUnrestricted.getY(), limit);
+		z = Math.min(momentumUnrestricted.getZ(), limit);
 	}
 
 	public double getX() {
@@ -91,7 +91,6 @@ public class Vec3d {
 
 	public Matrix4d outerProduct(Vec3d vec3d) {
 
-		int width = 4;
 		double[] elements = new double[16];
 
 		for (int thisVecIndex = 0; thisVecIndex < this.getValues().length; thisVecIndex++) {
@@ -121,6 +120,7 @@ public class Vec3d {
 		);
 	}
 
+	// used for integration
 	public Matrix4d star() {
 		return new Matrix4d(
 				0.0, -z, y, 0.0,

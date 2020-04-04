@@ -14,23 +14,26 @@ public class Quaternion {
 		return new Quaternion(rotationVec);
 	}
 
-	/** In radians
+	/**
+	 * In radians
 	 *
 	 * @param angle in radians
 	 * @return
 	 */
 	public static Quaternion RotationX(double angle) {
-		return new Quaternion(Math.cos(angle/2), Math.sin(angle/2), 0.0, 0.0);
+		return new Quaternion(Math.cos(angle / 2), Math.sin(angle / 2), 0.0, 0.0);
 	}
+
 	public static Quaternion RotationY(double angle) {
-		return new Quaternion(Math.cos(angle/2), 0.0, Math.sin(angle/2), 0.0);
+		return new Quaternion(Math.cos(angle / 2), 0.0, Math.sin(angle / 2), 0.0);
 	}
+
 	public static Quaternion RotationZ(double angle) {
-		return new Quaternion(Math.cos(angle/2), 0.0, 0.0, Math.sin(angle/2));
+		return new Quaternion(Math.cos(angle / 2), 0.0, 0.0, Math.sin(angle / 2));
 	}
 
 	public Quaternion normalise() {
-		return this.scale(1/this.len());
+		return this.scale(1 / this.len());
 	}
 
 	public Quaternion(double s, double i, double j, double k) {
@@ -62,7 +65,7 @@ public class Quaternion {
 	}
 
 	public Quaternion(Vec3d vec) {
-		this.q = new double[] { 0.0, vec.getX(), vec.getY(), vec.getZ() };
+		this.q = new double[]{0.0, vec.getX(), vec.getY(), vec.getZ()};
 	}
 
 	public Quaternion rotateVector(Quaternion vector) {
@@ -79,10 +82,10 @@ public class Quaternion {
 
 	public Quaternion multiply(Quaternion p) {
 		return new Quaternion(
-				(q[0] * p.getQ()[0]) -  (q[1] * p.getQ()[1]) - (q[2] * p.getQ()[2]) - (q[3] * p.getQ()[3]),
-				(q[1] * p.getQ()[0]) +  (q[0] * p.getQ()[1]) + (q[2] * p.getQ()[3]) - (q[3] * p.getQ()[2]),
-				(q[0] * p.getQ()[2]) -  (q[1] * p.getQ()[3]) + (q[2] * p.getQ()[0]) + (q[3] * p.getQ()[1]),
-				(q[0] * p.getQ()[3]) +  (q[1] * p.getQ()[2]) - (q[2] * p.getQ()[1]) + (q[3] * p.getQ()[0])
+				(q[0] * p.getQ()[0]) - (q[1] * p.getQ()[1]) - (q[2] * p.getQ()[2]) - (q[3] * p.getQ()[3]),
+				(q[1] * p.getQ()[0]) + (q[0] * p.getQ()[1]) + (q[2] * p.getQ()[3]) - (q[3] * p.getQ()[2]),
+				(q[0] * p.getQ()[2]) - (q[1] * p.getQ()[3]) + (q[2] * p.getQ()[0]) + (q[3] * p.getQ()[1]),
+				(q[0] * p.getQ()[3]) + (q[1] * p.getQ()[2]) - (q[2] * p.getQ()[1]) + (q[3] * p.getQ()[0])
 		);
 	}
 
@@ -114,15 +117,15 @@ public class Quaternion {
 	}
 
 	public Quaternion scale(double s) {
-		return new Quaternion(q[0]*s, q[1]*s, q[2]*s, q[3]*s);
+		return new Quaternion(q[0] * s, q[1] * s, q[2] * s, q[3] * s);
 	}
 
 	public Quaternion conjugate() {
-		return new Quaternion(q[0], - q[1], - q[2], - q[3]);
+		return new Quaternion(q[0], -q[1], -q[2], -q[3]);
 	}
 
 	public double len2() {
-		return (q[0]*q[0]) + (q[1]*q[1]) + (q[2]*q[2]) + (q[3]*q[3]);
+		return (q[0] * q[0]) + (q[1] * q[1]) + (q[2] * q[2]) + (q[3] * q[3]);
 	}
 
 	public double len() {
@@ -130,7 +133,7 @@ public class Quaternion {
 	}
 
 	public Quaternion inverse() {
-		return conjugate().scale(1/len());
+		return conjugate().scale(1 / len());
 	}
 
 	private double[] getQ() {

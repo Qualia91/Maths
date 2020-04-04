@@ -1,8 +1,5 @@
 package com.nick.wood.rigid_body_dynamics.maths;
 
-import com.nick.wood.rigid_body_dynamics.maths.Matrix4d;
-import com.nick.wood.rigid_body_dynamics.maths.Quaternion;
-import com.nick.wood.rigid_body_dynamics.maths.Vec3d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuaternionTest {
 
 	@Test
-	void example90DegRotAroundZ() {
+	void rotAroundZTest() {
 
 		Matrix4d rotationMatrix = new Matrix4d(
 				0, -1, 0.0, 0.0,
@@ -52,5 +49,85 @@ class QuaternionTest {
 
 		assertArrayEquals(rotatedVec3d.getValues(), expectedRotatedVector.getValues(), 0.000001);
 
+	}
+
+	@Test
+	void fromVec() {
+	}
+
+	@Test
+	void rotation() {
+	}
+
+	@Test
+	void rotationX() {
+	}
+
+	@Test
+	void rotationY() {
+	}
+
+	@Test
+	void rotationZ() {
+	}
+
+	@Test
+	void normalise() {
+	}
+
+	@Test
+	void getS() {
+	}
+
+	@Test
+	void getI() {
+	}
+
+	@Test
+	void getJ() {
+	}
+
+	@Test
+	void getK() {
+	}
+
+	@Test
+	void rotateVector() {
+	}
+
+	@Test
+	void add() {
+	}
+
+	@Test
+	void multiply() {
+	}
+
+	@Test
+	void toMatrix() {
+	}
+
+	@Test
+	void scale() {
+	}
+
+	@Test
+	void conjugate() {
+	}
+
+	@Test
+	void len2() {
+	}
+
+	@Test
+	void len() {
+	}
+
+	@Test
+	void inverse() {
+	}
+
+	@Test
+	void toVec3d() {
 	}
 }
