@@ -91,4 +91,14 @@
 
     </build>
 
+
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Github Qualia91 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/qualia91/Maths</url>
+        </repository>
+    </distributionManagement>
+
 </project>
