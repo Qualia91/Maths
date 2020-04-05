@@ -1,29 +1,34 @@
-package com.nick.wood.rigid_body_dynamics.maths;
+package com.nick.wood.maths.objects;
 
 import java.util.Arrays;
 
-public class Matrix4f {
+public class Matrix4d {
 
 	public static final int SIZE = 4;
-	private final float[] elements;
+	private final double[] elements;
 
-	public static Matrix4f Identity = new Matrix4f(
-			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
+	public static Matrix4d Identity = new Matrix4d(
+			1.0, 0.0, 0.0, 0.0,
+			0.0, 1.0, 0.0, 0.0,
+			0.0, 0.0, 1.0, 0.0,
+			0.0, 0.0, 0.0, 1.0
 	);
 
-	public static Matrix4f Translation(Vec3f vec3f) {
-		return new Matrix4f(
-				1.0f, 0.0f, 0.0f, vec3f.getX(),
-				0.0f, 1.0f, 0.0f, vec3f.getY(),
-				0.0f, 0.0f, 1.0f, vec3f.getZ(),
-				0.0f, 0.0f, 0.0f, 1.0f);
+	public static Matrix4d Translation(Vec3d vec3d) {
+		return new Matrix4d(
+				1.0, 0.0, 0.0, vec3d.getX(),
+				0.0, 1.0, 0.0, vec3d.getY(),
+				0.0, 0.0, 1.0, vec3d.getZ(),
+				0.0, 0.0, 0.0, 1.0);
+		//return new Matrix4d(
+		//		1.0, 0.0, 0.0, 0.0,
+		//		0.0, 1.0, 0.0, 0.0,
+		//		0.0, 0.0, 1.0, 0.0,
+		//		vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1.0);
 	}
 
-	public static Matrix4f Rotation(float angle, Vec3f axis) {
-		float[] newElems = new float[16];
+	public static Matrix4d Rotation(double angle, Vec3d axis) {
+		double[] newElems = new double[16];
 		newElems[15] = 1;
 
 		float cos = (float) Math.cos(Math.toRadians(angle));
@@ -40,41 +45,41 @@ public class Matrix4f {
 		newElems[1 * SIZE + 2] = axis.getZ() * axis.getY() * C + axis.getX() * sin;
 		newElems[2 * SIZE + 2] = cos + axis.getZ() * axis.getZ() * C;
 
-		return new Matrix4f(newElems);
+		return new Matrix4d(newElems);
 	}
 
-	private static Matrix4f Scale(Vec3f scale) {
-		return new Matrix4f(
-				scale.getX(), 0.0f, 0.0f, 0.0f,
-				0.0f, scale.getY(), 0.0f, 0.0f,
-				0.0f, 0.0f, scale.getZ(), 0.0f,
-				0.0f, 0.0f, 0.0f, 1.0f
+	private static Matrix4d Scale(Vec3d scale) {
+		return new Matrix4d(
+				scale.getX(), 0.0, 0.0, 0.0,
+				0.0, scale.getY(), 0.0, 0.0,
+				0.0, 0.0, scale.getZ(), 0.0,
+				0.0, 0.0, 0.0, 1.0
 		);
 	}
 
-	public Matrix4f add(Matrix4f matrix) {
+	public Matrix4d add(Matrix4d matrix) {
 
-		float[] newElements = new float[16];
+		double[] newElements = new double[16];
 
 		for (int i = 0; i < this.elements.length; i++) {
 			newElements[i] = this.elements[i] + matrix.getValues()[i];
 		}
 
-		return new Matrix4f(newElements);
+		return new Matrix4d(newElements);
 	}
 
-	public Matrix4f add(Vec3f vec3f) {
-		return new Matrix4f(
-				elements[0] + vec3f.getX(), elements[1], elements[2], elements[3],
-				elements[4], elements[5] + vec3f.getY(), elements[6], elements[7],
-				elements[8], elements[9], elements[10] + vec3f.getZ(), elements[11],
+	public Matrix4d add(Vec3d vec3d) {
+		return new Matrix4d(
+				elements[0] + vec3d.getX(), elements[1], elements[2], elements[3],
+				elements[4], elements[5] + vec3d.getY(), elements[6], elements[7],
+				elements[8], elements[9], elements[10] + vec3d.getZ(), elements[11],
 				elements[12], elements[13], elements[14], elements[15]
 		);
 	}
 
-	public Matrix4f multiply(Matrix4f matrix4d) {
+	public Matrix4d multiply(Matrix4d matrix4d) {
 
-		float[] newElements = new float[16];
+		double[] newElements = new double[16];
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -86,28 +91,34 @@ public class Matrix4f {
 			}
 		}
 
-		return new Matrix4f(newElements);
+		return new Matrix4d(newElements);
 
 	}
 
-	public Vec3f multiply(Vec3f vec) {
-		return new Vec3f(
+	public Vec3d multiply(Vec3d vec) {
+		return new Vec3d(
 				(vec.getX() * this.elements[0]) + (vec.getY() * this.elements[1]) + (vec.getZ() * this.elements[2]) + this.elements[3],
 				(vec.getX() * this.elements[4]) + (vec.getY() * this.elements[5]) + (vec.getZ() * this.elements[6]) + this.elements[7],
 				(vec.getX() * this.elements[8]) + (vec.getY() * this.elements[9]) + (vec.getZ() * this.elements[10] + this.elements[11])
 		);
 	}
 
-	public Matrix4f(float... elements) {
+	public Matrix4d scale(double s) {
+		return new Matrix4d(
+				Arrays.stream(this.elements).map((val -> val * s)).toArray()
+		);
+	}
+
+	public Matrix4d(double... elements) {
 		assert elements.length == 16;
 		this.elements = elements;
 	}
 
-	public float get(int x, int y) {
+	public double get(int x, int y) {
 		return elements[y * SIZE + x];
 	}
 
-	private float[] getValues() {
+	private double[] getValues() {
 		return elements;
 	}
 
@@ -132,48 +143,48 @@ public class Matrix4f {
 		};
 	}
 
-	public static Matrix4f Transform(Vec3f pos, Matrix4f rot, Vec3f scale) {
+	public static Matrix4d Transform(Vec3d pos, Matrix4d rot, Vec3d scale) {
 
-		Matrix4f translation = Translation(pos);
-		Matrix4f scaleMatrix = Scale(scale);
+		Matrix4d translation = Translation(pos);
+		Matrix4d scaleMatrix = Scale(scale);
 
 		return scaleMatrix.multiply(rot).multiply(translation);
 
 	}
 
-	public static Matrix4f InverseTransformation(Vec3f pos, Matrix4f rot, Vec3f scale) {
-		Matrix4f translation = Translation(pos);
-		Matrix4f scaleMatrix = Scale(scale);
+	public static Matrix4d InverseTransformation(Vec3d pos, Matrix4d rot, Vec3d scale) {
+		Matrix4d translation = Translation(pos);
+		Matrix4d scaleMatrix = Scale(scale);
 
 		return translation.multiply(rot).multiply(scaleMatrix);
 	}
 
-	public static Matrix4f Projection(float aspect, float fov, float near, float far) {
+	public static Matrix4d Projection(double aspect, double fov, double near, double far) {
 
-		float tanHalfFov = (float) Math.tan(fov / 2.0);
-		float farNearDel = far - near;
+		double tanHalfFov = Math.tan(fov / 2.0);
+		double farNearDel = far - near;
 
-		return new Matrix4f(
-				1.0f / (aspect * tanHalfFov), 0.0f, 0.0f, 0.0f,
-				0.0f, 1.0f / tanHalfFov, 0.0f, 0.0f,
-				0.0f, 0.0f, - (far + near)/farNearDel, - (2 * far * near) / farNearDel,
-				0.0f, 0.0f, -1.0f, 0.0f
+		return new Matrix4d(
+				1.0 / (aspect * tanHalfFov), 0.0, 0.0, 0.0,
+				0.0, 1.0 / tanHalfFov, 0.0, 0.0,
+				0.0, 0.0, - (far + near)/farNearDel, - (2 * far * near) / farNearDel,
+				0.0, 0.0, -1.0, 0.0
 		);
 
 	}
 
-	public static Matrix4f View(Vec3f pos, Vec3f rot) {
+	public static Matrix4d View(Vec3d pos, Vec3d rot) {
 
-		Matrix4f translation = Translation(pos.neg());
-		Matrix4f rotationX = Rotation(rot.getX(), Vec3f.X);
-		Matrix4f rotationY = Rotation(rot.getY(), Vec3f.Y);
-		Matrix4f rotationZ = Rotation(rot.getZ(), Vec3f.Z);
-		Matrix4f rotation = rotationZ.multiply(rotationY).multiply(rotationX);
+		Matrix4d translation = Translation(pos.neg());
+		Matrix4d rotationX = Rotation(rot.getX(), Vec3d.X);
+		Matrix4d rotationY = Rotation(rot.getY(), Vec3d.Y);
+		Matrix4d rotationZ = Rotation(rot.getZ(), Vec3d.Z);
+		Matrix4d rotation = rotationZ.multiply(rotationY).multiply(rotationX);
 
 		return translation.multiply(rotation);
 	}
 
-	public float trace() {
+	public double trace() {
 		return elements[0] + elements[5] + elements[10];
 	}
 
@@ -193,7 +204,7 @@ public class Matrix4f {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Matrix4f matrix4d = (Matrix4f) o;
+		Matrix4d matrix4d = (Matrix4d) o;
 		return Arrays.equals(elements, matrix4d.elements);
 	}
 
@@ -202,9 +213,9 @@ public class Matrix4f {
 		return Arrays.hashCode(elements);
 	}
 
-	public Matrix4f transpose() {
+	public Matrix4d transpose() {
 
-		float[] newElements = new float[16];
+		double[] newElements = new double[16];
 
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -212,18 +223,18 @@ public class Matrix4f {
 			}
 		}
 
-		return new Matrix4f(newElements);
+		return new Matrix4d(newElements);
 	}
 
-	public Vec3f getXVec() {
-		return new Vec3f(get(0,0), get(1,0), get(2,0));
+	public Vec3d getXVec() {
+		return new Vec3d(get(0,0), get(1,0), get(2,0));
 	}
 
-	public Vec3f getYVec() {
-		return new Vec3f(get(0,1), get(1,1), get(2,1));
+	public Vec3d getYVec() {
+		return new Vec3d(get(0,1), get(1,1), get(2,1));
 	}
 
-	public Vec3f getZVec() {
-		return new Vec3f(get(0,2), get(1,2), get(2,2));
+	public Vec3d getZVec() {
+		return new Vec3d(get(0,2), get(1,2), get(2,2));
 	}
 }
