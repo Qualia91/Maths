@@ -1,4 +1,4 @@
-package com.nick.wood.rigid_body_dynamics.maths;
+package com.nick.wood.maths.objects;
 
 import com.nick.wood.maths.objects.Matrix4d;
 import com.nick.wood.maths.objects.Quaternion;

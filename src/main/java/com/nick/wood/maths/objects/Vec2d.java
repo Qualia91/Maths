@@ -102,4 +102,8 @@ public class Vec2d {
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
+
+    public double get(int i) {
+        return (i == 0) ? x : y;
+    }
 }
