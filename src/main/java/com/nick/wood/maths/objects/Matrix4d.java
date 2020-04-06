@@ -148,7 +148,7 @@ public class Matrix4d {
 		Matrix4d translation = Translation(pos);
 		Matrix4d scaleMatrix = Scale(scale);
 
-		return scaleMatrix.multiply(rot).multiply(translation);
+		return translation.multiply(rot).multiply(scaleMatrix);
 
 	}
 
@@ -156,7 +156,7 @@ public class Matrix4d {
 		Matrix4d translation = Translation(pos);
 		Matrix4d scaleMatrix = Scale(scale);
 
-		return translation.multiply(rot).multiply(scaleMatrix);
+		return scaleMatrix.multiply(rot).multiply(translation);
 	}
 
 	public static Matrix4d Projection(double aspect, double fov, double near, double far) {
