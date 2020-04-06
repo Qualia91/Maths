@@ -182,4 +182,8 @@ public class Vec3d {
 				Math.max(a.getZ(), b.getZ())
 		);
 	}
+
+	public float[] getValuesF() {
+		return new float[] {(float) x, (float) y, (float) z};
+	}
 }
