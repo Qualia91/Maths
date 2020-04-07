@@ -182,4 +182,8 @@ public class Vec3f {
 				Math.max(a.getZ(), b.getZ())
 		);
 	}
+
+	public Vec3d toVec3d() {
+		return new Vec3d(x, y, z);
+	}
 }

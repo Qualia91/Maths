@@ -186,4 +186,8 @@ public class Vec3d {
 	public float[] getValuesF() {
 		return new float[] {(float) x, (float) y, (float) z};
 	}
+
+	public Vec3f toVec3f() {
+		return new Vec3f((float) x, (float) y, (float) z);
+	}
 }
