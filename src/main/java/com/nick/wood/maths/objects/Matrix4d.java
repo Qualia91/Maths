@@ -98,6 +98,14 @@ public class Matrix4d {
 		);
 	}
 
+	public Vec3d rotate(Vec3d vec) {
+		return new Vec3d(
+				(vec.getX() * this.elements[0]) + (vec.getY() * this.elements[1]) + (vec.getZ() * this.elements[2]),
+				(vec.getX() * this.elements[4]) + (vec.getY() * this.elements[5]) + (vec.getZ() * this.elements[6]),
+				(vec.getX() * this.elements[8]) + (vec.getY() * this.elements[9]) + (vec.getZ() * this.elements[10])
+		);
+	}
+
 	public Matrix4d scale(double s) {
 		return new Matrix4d(
 				Arrays.stream(this.elements).map((val -> val * s)).toArray()
@@ -143,15 +151,15 @@ public class Matrix4d {
 		Matrix4d translation = Translation(pos);
 		Matrix4d scaleMatrix = Scale(scale);
 
-		return translation.multiply(rot).multiply(scaleMatrix);
+		return scaleMatrix.multiply(rot).multiply(translation);
 
 	}
 
 	public static Matrix4d InverseTransformation(Vec3d pos, Matrix4d rot, Vec3d scale) {
-		Matrix4d translation = Translation(pos);
+		Matrix4d translation = Translation(pos.neg());
 		Matrix4d scaleMatrix = Scale(scale);
 
-		return scaleMatrix.multiply(rot).multiply(translation);
+		return translation.multiply(rot.transpose()).multiply(scaleMatrix);
 	}
 
 	public static Matrix4d Projection(double aspect, double fov, double near, double far) {
