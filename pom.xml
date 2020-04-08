@@ -17,20 +17,8 @@
     </dependencies>
     <packaging>jar</packaging>
 
-    <properties>
-        <lwjgl.version>3.2.3</lwjgl.version>
-        <lwjgl.natives>natives-windows</lwjgl.natives>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.lwjgl</groupId>
-                <artifactId>lwjgl-bom</artifactId>
-                <version>${lwjgl.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>

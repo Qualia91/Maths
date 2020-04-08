@@ -20,11 +20,6 @@ public class Matrix4d {
 				0.0, 1.0, 0.0, vec3d.getY(),
 				0.0, 0.0, 1.0, vec3d.getZ(),
 				0.0, 0.0, 0.0, 1.0);
-		//return new Matrix4d(
-		//		1.0, 0.0, 0.0, 0.0,
-		//		0.0, 1.0, 0.0, 0.0,
-		//		0.0, 0.0, 1.0, 0.0,
-		//		vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1.0);
 	}
 
 	public static Matrix4d Rotation(double angle, Vec3d axis) {
@@ -237,4 +232,17 @@ public class Matrix4d {
 	public Vec3d getZVec() {
 		return new Vec3d(get(0,2), get(1,2), get(2,2));
 	}
+
+	// todo implement gauss jordon elimination
+
+    //public double det() {
+
+    //}
+
+    // adjugate matrix method
+	//public Matrix4d inverse() {
+
+
+
+    //}
 }
