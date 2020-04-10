@@ -1,6 +1,5 @@
 package com.nick.wood.maths.objects;
 
-import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public class Matrixd {

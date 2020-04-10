@@ -2,7 +2,7 @@ package com.nick.wood.maths.objects;
 
 import java.util.Objects;
 
-public class Vec3d {
+public class Vec3d implements Vecd {
 
 	public static final Vec3d ZERO = new Vec3d(0.0, 0.0, 0.0);
 	public static final Vec3d X = new Vec3d(1.0, 0.0, 0.0);
@@ -39,18 +39,22 @@ public class Vec3d {
 		return z;
 	}
 
-	public Vec3d add(Vec3d vec) {
+	public Vec3d add(Vecd vec) {
+		assert vec instanceof Vec3d;
+		Vec3d vec3d = (Vec3d) vec;
 		return new Vec3d(
-				this.x + vec.x,
-				this.y + vec.y,
-				this.z + vec.z);
+				this.x + vec3d.x,
+				this.y + vec3d.y,
+				this.z + vec3d.z);
 	}
 
-	public Vec3d subtract(Vec3d vec) {
+	public Vec3d subtract(Vecd vec) {
+		assert vec instanceof Vec3d;
+		Vec3d vec3d = (Vec3d) vec;
 		return new Vec3d(
-				this.x - vec.x,
-				this.y - vec.y,
-				this.z - vec.z);
+				this.x - vec3d.x,
+				this.y - vec3d.y,
+				this.z - vec3d.z);
 	}
 
 	public Vec3d scale(double s) {
@@ -60,11 +64,13 @@ public class Vec3d {
 				this.z * s);
 	}
 
-	public double dot(Vec3d vec) {
+	public double dot(Vecd vec) {
+		assert vec instanceof Vec3d;
+		Vec3d vec3d = (Vec3d) vec;
 		return
-				this.x * vec.getX() +
-				this.y * vec.getY() +
-				this.z * vec.getZ();
+				this.x * vec3d.getX() +
+				this.y * vec3d.getY() +
+				this.z * vec3d.getZ();
 	}
 
 	public double length2() {
@@ -89,7 +95,7 @@ public class Vec3d {
 		return new double[] {x, y, z};
 	}
 
-	public Matrix4d outerProduct(Vec3d vec3d) {
+	public Matrix4d outerProduct(Vecd vec3d) {
 
 		double[] elements = new double[16];
 
@@ -104,7 +110,9 @@ public class Vec3d {
 		return new Matrix4d(elements);
 	}
 
-	public Vec3d cross(Vec3d vec3d) {
+	public Vec3d cross(Vecd vec) {
+		assert vec instanceof Vec3d;
+		Vec3d vec3d = (Vec3d) vec;
 		return new Vec3d(
 				this.y * vec3d.z - this.z * vec3d.y,
 				this.z * vec3d.x - this.x * vec3d.z,
@@ -159,12 +167,19 @@ public class Vec3d {
 	}
 
 	// element wise multiplication
-	public Vec3d multiply(Vec3d n) {
+	public Vec3d multiply(Vecd vec) {
+		assert vec instanceof Vec3d;
+		Vec3d vec3d = (Vec3d) vec;
 		return new Vec3d(
-				x * n.getX(),
-				y * n.getY(),
-				z * n.getZ()
+				x * vec3d.getX(),
+				y * vec3d.getY(),
+				z * vec3d.getZ()
 		);
+	}
+
+	@Override
+	public double get(int i) {
+		return 0;
 	}
 
 	public static Vec3d Min(Vec3d a, Vec3d b) {

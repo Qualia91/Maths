@@ -58,8 +58,11 @@ public class Vec2f {
 		return (float) Math.sqrt(length2());
 	}
 
-	public Vec2f normalise() {
-		return this.scale(this.length());
+	public Vec2f normalise()  {
+		if (this.length() == 0.0 ) {
+			return Vec2f.ZERO;
+		}
+		return this.scale(1/this.length());
 	}
 
 	public float[] getValues() {
@@ -87,6 +90,16 @@ public class Vec2f {
 				-this.x,
 				-this.y
 		);
+	}
+
+	public double cross(Vec2f vec2f) {
+		return (this.x * vec2f.y) - (vec2f.x * this.y);
+	}
+
+	public Vec2f midpoint(Vec2f vec2f) {
+		float x = (vec2f.x + this.x)/2;
+		float y = (vec2f.y + this.y)/2;
+		return new Vec2f(x, y);
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 package com.nick.wood.maths.objects;
 
-import com.nick.wood.maths.objects.Matrix4d;
-import com.nick.wood.maths.objects.Quaternion;
-import com.nick.wood.maths.objects.Vec3d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

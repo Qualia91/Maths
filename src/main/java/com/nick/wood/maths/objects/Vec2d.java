@@ -2,7 +2,7 @@ package com.nick.wood.maths.objects;
 
 import java.util.Objects;
 
-public class Vec2d {
+public class Vec2d implements Vecd {
 
 	public static final Vec2d ZERO = new Vec2d(0.0, 0.0);
 	public static final Vec2d X = new Vec2d(1.0, 0.0);
@@ -24,16 +24,20 @@ public class Vec2d {
 		return y;
 	}
 
-	public Vec2d add(Vec2d vec) {
+	public Vec2d add(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
 		return new Vec2d(
-				this.x + vec.x,
-				this.y + vec.y);
+				this.x + vec2d.x,
+				this.y + vec2d.y);
 	}
 
-	public Vec2d subtract(Vec2d vec) {
+	public Vec2d subtract(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
 		return new Vec2d(
-				this.x - vec.x,
-				this.y - vec.y);
+				this.x - vec2d.x,
+				this.y - vec2d.y);
 	}
 
 	public Vec2d scale(double s) {
@@ -42,10 +46,12 @@ public class Vec2d {
 				this.y * s);
 	}
 
-	public double dot(Vec2d vec) {
+	public double dot(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
 		return
-				this.x * vec.getX() +
-				this.y * vec.getY();
+				this.x * vec2d.getX() +
+				this.y * vec2d.getY();
 	}
 
 	public double length2() {
@@ -59,22 +65,27 @@ public class Vec2d {
 	}
 
 	public Vec2d normalise() {
-		return this.scale(this.length());
+		if (this.length() == 0.0 ) {
+			return Vec2d.ZERO;
+		}
+		return this.scale(1/this.length());
 	}
 
 	public double[] getValues() {
 		return new double[] {x, y};
 	}
 
-	public Matrix4d outerProduct(Vec2d vec3d) {
+	public Matrix4d outerProduct(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
 
 		int width = 4;
 		double[] elements = new double[16];
 
 		for (int thisVecIndex = 0; thisVecIndex < this.getValues().length; thisVecIndex++) {
-			for (int otherVecIndex = 0; otherVecIndex < vec3d.getValues().length; otherVecIndex++) {
+			for (int otherVecIndex = 0; otherVecIndex < vec2d.getValues().length; otherVecIndex++) {
 
-				elements[thisVecIndex * 4 + otherVecIndex] = this.getValues()[thisVecIndex] * vec3d.getValues()[otherVecIndex];
+				elements[thisVecIndex * 4 + otherVecIndex] = this.getValues()[thisVecIndex] * vec2d.getValues()[otherVecIndex];
 
 			}
 		}
@@ -87,6 +98,25 @@ public class Vec2d {
 				-this.x,
 				-this.y
 		);
+	}
+
+	@Override
+	public Vec2d multiply(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
+		return new Vec2d(x * vec2d.getX(), y * vec2d.getY());
+	}
+
+	public Vec2d cross(Vecd vec) {
+		assert vec instanceof Vec2d;
+		Vec2d vec2d = (Vec2d) vec;
+		return new Vec2d(this.x * vec2d.y, vec2d.x * this.y);
+	}
+
+	public Vec2d midpoint(Vec2d vec2d) {
+		double x = (vec2d.x + this.x)/2;
+		double y = (vec2d.y + this.y)/2;
+		return new Vec2d(x, y);
 	}
 
 	@Override
