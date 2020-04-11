@@ -179,7 +179,16 @@ public class Vec3d implements Vecd {
 
 	@Override
 	public double get(int i) {
-		return 0;
+		switch (i) {
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			default:
+				throw new RuntimeException(i + " is out of bounds for current vector");
+		}
 	}
 
 	public static Vec3d Min(Vec3d a, Vec3d b) {
