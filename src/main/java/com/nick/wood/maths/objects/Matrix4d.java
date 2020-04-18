@@ -121,8 +121,22 @@ public class Matrix4d {
 		return elements[y * SIZE + x];
 	}
 
-	private double[] getValues() {
+	public double[] getValues() {
 		return elements;
+	}
+
+	public Matrix3d getRotation() {
+		return new Matrix3d(
+				elements[0], elements[1], elements[2],
+				elements[4], elements[5], elements[6],
+				elements[8], elements[9], elements[10]
+		);
+	}
+
+	public Vec3d getTranslation() {
+		return new Vec3d(
+				elements[3], elements[7], elements[11]
+		);
 	}
 
 	public float[] getValuesF() {
