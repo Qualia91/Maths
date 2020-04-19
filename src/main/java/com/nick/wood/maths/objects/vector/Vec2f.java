@@ -1,8 +1,10 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
+
+import com.nick.wood.maths.objects.matrix.Matrix4d;
 
 import java.util.Objects;
 
-public class Vec2f {
+public class Vec2f implements Vecf {
 
 	public static final Vec2f ZERO = new Vec2f(0.0f, 0.0f);
 	public static final Vec2f X = new Vec2f(1.0f, 0.0f);
@@ -42,13 +44,13 @@ public class Vec2f {
 				this.y * s);
 	}
 
-	public double dot(Vec2f vec) {
+	public float dot(Vec2f vec) {
 		return
 				this.x * vec.getX() +
 				this.y * vec.getY();
 	}
 
-	public double length2() {
+	public float length2() {
 		return
 				(this.x * this.x) +
 				(this.y * this.y);
@@ -58,8 +60,11 @@ public class Vec2f {
 		return (float) Math.sqrt(length2());
 	}
 
-	public Vec2f normalise() {
-		return this.scale(this.length());
+	public Vec2f normalise()  {
+		if (this.length() == 0.0f ) {
+			return Vec2f.ZERO;
+		}
+		return this.scale(1.0f/this.length());
 	}
 
 	public float[] getValues() {
@@ -87,6 +92,16 @@ public class Vec2f {
 				-this.x,
 				-this.y
 		);
+	}
+
+	public double cross(Vec2f vec2f) {
+		return (this.x * vec2f.y) - (vec2f.x * this.y);
+	}
+
+	public Vec2f midpoint(Vec2f vec2f) {
+		float x = (vec2f.x + this.x)/2;
+		float y = (vec2f.y + this.y)/2;
+		return new Vec2f(x, y);
 	}
 
 	@Override

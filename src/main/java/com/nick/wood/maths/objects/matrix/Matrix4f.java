@@ -1,4 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.matrix;
+
+import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.vector.Vec3f;
 
 import java.util.Arrays;
 
@@ -107,28 +110,28 @@ public class Matrix4f {
 		return elements[y * SIZE + x];
 	}
 
-	private float[] getValues() {
+	public float[] getValues() {
 		return elements;
 	}
 
-	public float[] getValuesF() {
-		return new float[]{
-				(float) elements[0],
-				(float) elements[1],
-				(float) elements[2],
-				(float) elements[3],
-				(float) elements[4],
-				(float) elements[5],
-				(float) elements[6],
-				(float) elements[7],
-				(float) elements[8],
-				(float) elements[9],
-				(float) elements[10],
-				(float) elements[11],
-				(float) elements[12],
-				(float) elements[13],
-				(float) elements[14],
-				(float) elements[15]
+	public double[] getValuesD() {
+		return new double[]{
+				elements[0],
+				elements[1],
+				elements[2],
+				elements[3],
+				elements[4],
+				elements[5],
+				elements[6],
+				elements[7],
+				elements[8],
+				elements[9],
+				elements[10],
+				elements[11],
+				elements[12],
+				elements[13],
+				elements[14],
+				elements[15]
 		};
 	}
 
@@ -160,6 +163,14 @@ public class Matrix4f {
 				0.0f, 0.0f, -1.0f, 0.0f
 		);
 
+	}
+
+	public Vec3f rotate(Vec3f vec) {
+		return new Vec3f(
+				(vec.getX() * this.elements[0]) + (vec.getY() * this.elements[1]) + (vec.getZ() * this.elements[2]),
+				(vec.getX() * this.elements[4]) + (vec.getY() * this.elements[5]) + (vec.getZ() * this.elements[6]),
+				(vec.getX() * this.elements[8]) + (vec.getY() * this.elements[9]) + (vec.getZ() * this.elements[10])
+		);
 	}
 
 	public static Matrix4f View(Vec3f pos, Vec3f rot) {

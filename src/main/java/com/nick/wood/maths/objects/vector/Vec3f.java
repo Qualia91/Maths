@@ -1,4 +1,6 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
+
+import com.nick.wood.maths.objects.matrix.Matrix4f;
 
 import java.util.Objects;
 
@@ -181,5 +183,9 @@ public class Vec3f {
 				Math.max(a.getY(), b.getY()),
 				Math.max(a.getZ(), b.getZ())
 		);
+	}
+
+	public Vec3d toVec3d() {
+		return new Vec3d(x, y, z);
 	}
 }

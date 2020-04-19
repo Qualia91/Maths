@@ -1,12 +1,12 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.dev;
 
-public class Vecd {
+public class Vecnd {
 
     private final int SIZE;
 
     private final double[] elements;
 
-    public Vecd(double ... e) {
+    public Vecnd(double ... e) {
         elements = e;
         SIZE = e.length;
     }
@@ -15,11 +15,11 @@ public class Vecd {
      * Default matrices to choose from
      * - Identity
      */
-    public static Vecd Empty(int size) {
-        return new Vecd(0.0, 0.0, 0.0);
+    public static Vecnd Empty(int size) {
+        return new Vecnd(0.0, 0.0, 0.0);
     }
 
-    public double dot(Vecd vec) {
+    public double dot(Vecnd vec) {
         assert SIZE == vec.elements.length;
         double sum = 0.0;
         for (int i = 0; i < SIZE; i++) {
@@ -28,10 +28,13 @@ public class Vecd {
         return sum;
     }
 
-    /*public Vecd cross(Vecd vec) {
-        assert SIZE == vec.elements.length;
-        for (int i = 0; i < SIZE; i++) {
-            this.elements[i]
-        }
-    }*/
+    /**
+     * Getter using x and y values assuming x are columns are y are rows.
+     *
+     * @return values in matrix
+     */
+    public double get(int x) {
+        return elements[x];
+    }
+
 }

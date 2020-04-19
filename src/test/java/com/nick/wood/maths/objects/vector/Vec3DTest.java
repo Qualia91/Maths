@@ -1,12 +1,12 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
 
-import com.nick.wood.maths.objects.Matrix4d;
-import com.nick.wood.maths.objects.Vec3d;
+import com.nick.wood.maths.objects.matrix.Matrix4d;
+import com.nick.wood.maths.objects.vector.Vec3d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Vec3dTest {
+class Vec3DTest {
 
 	@Test
 	void limitCreationTest() {
@@ -144,14 +144,6 @@ class Vec3dTest {
 
 	@Test
 	void starTest() {
-		//public Matrix4d star() {
-		//	return new Matrix4d(
-		//			0.0, -z, y, 0.0,
-		//			z, 0.0, -x, 0.0,
-		//			-y, x, 0.0, 0.0,
-		//			0.0, 0.0, 0.0, 1.0
-		//	);
-		//}
 		Matrix4d one = new Vec3d(2, 3, -4).star();
 
 		assertEquals(one.get(0, 0), 0.0, 0.000000001);

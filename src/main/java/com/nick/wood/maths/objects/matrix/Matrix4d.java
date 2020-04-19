@@ -1,4 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.matrix;
+
+import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.vector.Vec3d;
 
 import java.util.Arrays;
 
@@ -98,6 +101,14 @@ public class Matrix4d {
 		);
 	}
 
+	public Vec3d rotate(Vec3d vec) {
+		return new Vec3d(
+				(vec.getX() * this.elements[0]) + (vec.getY() * this.elements[1]) + (vec.getZ() * this.elements[2]),
+				(vec.getX() * this.elements[4]) + (vec.getY() * this.elements[5]) + (vec.getZ() * this.elements[6]),
+				(vec.getX() * this.elements[8]) + (vec.getY() * this.elements[9]) + (vec.getZ() * this.elements[10])
+		);
+	}
+
 	public Matrix4d scale(double s) {
 		return new Matrix4d(
 				Arrays.stream(this.elements).map((val -> val * s)).toArray()
@@ -113,8 +124,22 @@ public class Matrix4d {
 		return elements[y * SIZE + x];
 	}
 
-	private double[] getValues() {
+	public double[] getValues() {
 		return elements;
+	}
+
+	public Matrix3d getRotation() {
+		return new Matrix3d(
+				elements[0], elements[1], elements[2],
+				elements[4], elements[5], elements[6],
+				elements[8], elements[9], elements[10]
+		);
+	}
+
+	public Vec3d getTranslation() {
+		return new Vec3d(
+				elements[3], elements[7], elements[11]
+		);
 	}
 
 	public float[] getValuesF() {
@@ -148,10 +173,10 @@ public class Matrix4d {
 	}
 
 	public static Matrix4d InverseTransformation(Vec3d pos, Matrix4d rot, Vec3d scale) {
-		Matrix4d translation = Translation(pos);
+		Matrix4d translation = Translation(pos.neg());
 		Matrix4d scaleMatrix = Scale(scale);
 
-		return translation.multiply(rot).multiply(scaleMatrix);
+		return translation.multiply(rot.transpose()).multiply(scaleMatrix);
 	}
 
 	public static Matrix4d Projection(double aspect, double fov, double near, double far) {

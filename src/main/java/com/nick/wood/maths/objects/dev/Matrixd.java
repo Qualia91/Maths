@@ -1,6 +1,8 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.dev;
 
-import java.util.Arrays;
+import com.nick.wood.maths.objects.vector.Vec2d;
+import com.nick.wood.maths.objects.vector.Vecd;
+
 import java.util.function.BiFunction;
 
 public class Matrixd {
@@ -27,9 +29,9 @@ public class Matrixd {
 
         double[] elems = new double[sizeRow * sizeCol];
 
-        for (int i = 0; i < sizeCol; i++) {
-            for (int j = 0; j < sizeRow; j++) {
-                elems[i * sizeCol + j] = func.apply(i, j);
+        for (int rowIndex = 0; rowIndex < sizeRow; rowIndex++) {
+            for (int colIndex = 0; colIndex < sizeCol; colIndex++) {
+                elems[rowIndex * sizeCol + colIndex] = func.apply(colIndex, rowIndex);
             }
         }
 
@@ -63,14 +65,8 @@ public class Matrixd {
      */
     public Matrixd(int rowSize, int colSize, double... elements) {
         assert elements.length > 3;
-        double sqrtD = Math.sqrt(elements.length);
-        int sqrtI = (int) sqrtD;
-        double diff = sqrtD - sqrtI;
-        if (diff > 0.00000001) {
-            System.err.println("Number of elements provided does not have a square root and will not make a square matrix. A few elements have been culled.");
-        }
-        SIZE_ROW = sqrtI;
-        SIZE_COL = sqrtI;
+        SIZE_ROW = rowSize;
+        SIZE_COL = colSize;
         assert elements.length == SIZE_ROW * SIZE_COL;
         this.elements = elements;
     }
@@ -86,22 +82,22 @@ public class Matrixd {
         return elements[y * SIZE_COL + x];
     }
 
-    private Vecd getRow(int rowIndex) {
-        return new Vecd(loopAction((i, j) -> get(i, rowIndex), SIZE_ROW, 1));
+    public Vecnd getRow(int rowIndex) {
+        return new Vecnd(loopAction((i, j) -> get(j, rowIndex), SIZE_ROW, 1));
     }
 
-    private Vecd getCol(int colIndex) {
-        return new Vecd(loopAction((i, j) -> get(colIndex, j), 1, SIZE_COL));
+    public Vecnd getCol(int colIndex) {
+        return new Vecnd(loopAction((i, j) -> get(colIndex, i), 1, SIZE_COL));
     }
 
     /**
      * Adds a 2D vector to the diagonal elements of the matrix
      *
-     * @param vec2d input vector
+     * @param vecd input vector
      * @return new Matrix2D
      */
-    public Matrixd add(Vec2d vec2d) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) + vec2d.get(i), SIZE_ROW, SIZE_COL));
+    public Matrixd add(Vecd vecd) {
+        return new Matrixd(loopAction((i, j) -> get(i, j) + vecd.get(i), SIZE_ROW, SIZE_COL));
     }
 
     /**
@@ -130,10 +126,20 @@ public class Matrixd {
      * Matrix element-wise multiplication
      *
      * @param matrixd
+     * @return matrixd
+     */
+    public Matrixd elemMultiply(Matrixd matrixd) {
+        return new Matrixd(loopAction((i, j) -> get(i, j) * matrixd.get(i, j), SIZE_ROW, SIZE_COL));
+    }
+
+    /**
+     * Matrix multiplication
+     *
+     * @param matrixd
      * @return matrix2d
      */
     public Matrixd multiply(Matrixd matrixd) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) * matrixd.get(i, j), SIZE_ROW, SIZE_COL));
+        return new Matrixd(loopAction((i, j) -> getCol(i).dot(matrixd.getRow(j)), SIZE_ROW, SIZE_COL));
     }
 
     /**
