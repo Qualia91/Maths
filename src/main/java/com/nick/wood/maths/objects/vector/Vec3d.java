@@ -1,4 +1,6 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
+
+import com.nick.wood.maths.objects.matrix.Matrix4d;
 
 import java.util.Objects;
 
@@ -191,7 +193,12 @@ public class Vec3d implements Vecd {
 		}
 	}
 
-	public static Vec3d Min(Vec3d a, Vec3d b) {
+    @Override
+    public Vecf toVecf() {
+        return null;
+    }
+
+    public static Vec3d Min(Vec3d a, Vec3d b) {
 		return new Vec3d(
 				Math.min(a.getX(), b.getX()),
 				Math.min(a.getY(), b.getY()),

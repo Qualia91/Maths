@@ -1,8 +1,8 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
 
 public class Vector {
 
-	public static Vecd create(double... e) {
+	public static Vecd Create(double... e) {
 		switch (e.length) {
 			case 2:
 				return new Vec2d(e[0], e[1]);
@@ -13,12 +13,12 @@ public class Vector {
 		}
 	}
 
-	public static Vecd zero(int num) {
+	public static Vecd ZERO(int num) {
 		switch (num) {
 			case 2:
-				return new Vec2d(0.0, 0.0);
+				return Vec2d.ZERO;
 			case 3:
-				return new Vec3d(0.0, 0.0, 0.0);
+				return Vec3d.ZERO;
 			default:
 				throw new UnsupportedOperationException("A vector of length " + num + " has not been implemented yet");
 		}

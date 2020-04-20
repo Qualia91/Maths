@@ -1,4 +1,4 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
 
 public class Vec6d {
 

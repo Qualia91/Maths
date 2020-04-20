@@ -1,4 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.matrix;
+
+import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.vector.Vec3f;
 
 import java.util.Arrays;
 

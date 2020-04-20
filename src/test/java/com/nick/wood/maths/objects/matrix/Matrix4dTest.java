@@ -1,8 +1,6 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.matrix;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class Matrix4dTest {
 

@@ -1,6 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
 
 public interface Vecd {
+
 	Vecd add(Vecd v);
 	Vecd subtract(Vecd v);
 	Vecd scale(double s);
@@ -13,4 +14,5 @@ public interface Vecd {
 	Vecd neg();
 	Vecd multiply(Vecd n);
 	double get(int i);
+	Vecf toVecf();
 }

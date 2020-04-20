@@ -1,4 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
+
+import com.nick.wood.maths.objects.matrix.Matrix2d;
+import com.nick.wood.maths.objects.matrix.Matrix4d;
 
 import java.util.Objects;
 
@@ -68,29 +71,28 @@ public class Vec2d implements Vecd {
 		if (this.length() == 0.0 ) {
 			return Vec2d.ZERO;
 		}
-		return this.scale(1/this.length());
+		return this.scale(1.0/this.length());
 	}
 
 	public double[] getValues() {
 		return new double[] {x, y};
 	}
 
-	public Matrix4d outerProduct(Vecd vec) {
+	public Matrix2d outerProduct(Vecd vec) {
 		assert vec instanceof Vec2d;
 		Vec2d vec2d = (Vec2d) vec;
 
-		int width = 4;
-		double[] elements = new double[16];
+		double[] elements = new double[4];
 
 		for (int thisVecIndex = 0; thisVecIndex < this.getValues().length; thisVecIndex++) {
 			for (int otherVecIndex = 0; otherVecIndex < vec2d.getValues().length; otherVecIndex++) {
 
-				elements[thisVecIndex * 4 + otherVecIndex] = this.getValues()[thisVecIndex] * vec2d.getValues()[otherVecIndex];
+				elements[thisVecIndex * 2 + otherVecIndex] = this.getValues()[thisVecIndex] * vec2d.getValues()[otherVecIndex];
 
 			}
 		}
 
-		return new Matrix4d(elements);
+		return new Matrix2d(elements);
 	}
 
 	public Vec2d neg() {
@@ -135,5 +137,10 @@ public class Vec2d implements Vecd {
 
     public double get(int i) {
         return (i == 0) ? x : y;
+    }
+
+    @Override
+    public Vec2f toVecf() {
+        return new Vec2f((float) x, (float) y);
     }
 }

@@ -1,4 +1,6 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.vector;
+
+import com.nick.wood.maths.objects.matrix.Matrix4f;
 
 import java.util.Objects;
 

@@ -1,5 +1,7 @@
-package com.nick.wood.maths.objects;
+package com.nick.wood.maths.objects.matrix;
 
+import com.nick.wood.maths.objects.matrix.Matrix2d;
+import com.nick.wood.maths.objects.vector.Vec2d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
