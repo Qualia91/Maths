@@ -4,7 +4,7 @@ import com.nick.wood.maths.objects.matrix.Matrix4f;
 
 import java.util.Objects;
 
-public class Vec3f {
+public class Vec3f implements Vecf{
 
 	public static final Vec3f ZERO = new Vec3f(0.0f, 0.0f, 0.0f);
 	public static final Vec3f X =    new Vec3f(1.0f, 0.0f, 0.0f);

@@ -29,9 +29,9 @@ public class Matrix4d {
 		double[] newElems = new double[16];
 		newElems[15] = 1;
 
-		float cos = (float) Math.cos(Math.toRadians(angle));
-		float sin = (float) Math.sin(Math.toRadians(angle));
-		float C = 1 - cos;
+		double cos = Math.cos(Math.toRadians(angle));
+		double sin = Math.sin(Math.toRadians(angle));
+		double C = 1 - cos;
 
 		newElems[0 * SIZE + 0] = cos + axis.getX() * axis.getX() * C;
 		newElems[1 * SIZE + 0] = axis.getX() * axis.getY() * C - axis.getZ() * sin;

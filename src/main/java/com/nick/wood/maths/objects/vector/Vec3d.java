@@ -195,7 +195,11 @@ public class Vec3d implements Vecd {
 
     @Override
     public Vecf toVecf() {
-        return null;
+        return new Vec3f(
+        		(float) x,
+        		(float) y,
+        		(float) z
+		        );
     }
 
     public static Vec3d Min(Vec3d a, Vec3d b) {
