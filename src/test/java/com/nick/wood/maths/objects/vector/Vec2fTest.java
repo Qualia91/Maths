@@ -1,37 +1,36 @@
 package com.nick.wood.maths.objects.vector;
 
-import com.nick.wood.maths.objects.matrix.Matrix2d;
-import com.nick.wood.maths.objects.matrix.Matrix4d;
+import com.nick.wood.maths.objects.matrix.Matrix2f;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Vec2dTest {
+class Vec2fTest {
 
-    private final Vec2d one = new Vec2d(1.0, 2.0);
-    private final Vec2d two = new Vec2d(3.0, 4.0);
+    private final Vec2f one = new Vec2f(1, 2);
+    private final Vec2f two = new Vec2f(3, 4);
 
     @Test
     void getXTest() {
-        assertEquals(one.getX(), 1.0, 0.000000001);
+        assertEquals(one.getX(), 1.0f, 0.000000001f);
     }
 
     @Test
     void getYTest() {
-        assertEquals(one.getY(), 2.0, 0.000000001);
+        assertEquals(one.getY(), 2.0f, 0.000000001f);
     }
 
     @Test
     void addTest() {
-        Vec2d answer = one.add(one);
+        Vec2f answer = one.add(one);
 
-        assertEquals(answer.getX(), 2.0, 0.000000001);
-        assertEquals(answer.getY(), 4.0, 0.000000001);
+        assertEquals(answer.getX(), 2.0f, 0.000000001f);
+        assertEquals(answer.getY(), 4.0f, 0.000000001f);
     }
 
     @Test
     void subtractTest() {
-        Vec2d answer = one.subtract(one);
+        Vec2f answer = one.subtract(one);
 
         assertEquals(answer.getX(), 0.0, 0.000000001);
         assertEquals(answer.getY(), 0.0, 0.000000001);
@@ -39,7 +38,7 @@ class Vec2dTest {
 
     @Test
     void scaleTest() {
-        Vec2d answer = one.scale(10.0);
+        Vec2f answer = one.scale(10.0f);
 
         assertEquals(answer.getX(), 10.0, 0.000000001);
         assertEquals(answer.getY(), 20.0, 0.000000001);
@@ -47,34 +46,34 @@ class Vec2dTest {
 
     @Test
     void dotTest() {
-        double answer = one.dot(one);
+        float answer = one.dot(one);
 
         assertEquals(answer, 5.0, 0.000000001);
     }
 
     @Test
     void length2Test() {
-        double answer = one.length2();
+        float answer = one.length2();
 
         assertEquals(answer, 5.0, 0.000000001);
     }
 
     @Test
     void lengthTest() {
-        double answer = one.length();
+        float answer = one.length();
 
         assertEquals(answer, Math.sqrt(5.0), 0.000000001);
     }
 
     @Test
     void normaliseTest() {
-        Vec2d answer = one.normalise();
+        Vec2f answer = one.normalise();
 
         assertEquals(answer.getX(), 1.0/Math.sqrt(5.0), 0.000000001);
         assertEquals(answer.getY(), 2.0/Math.sqrt(5.0), 0.000000001);
 
         // test length being 0
-        Vec2d answer2 = Vec2d.ZERO.normalise();
+        Vec2f answer2 = Vec2f.ZERO.normalise();
 
         assertEquals(answer2.getX(), 0.0, 0.000000001);
         assertEquals(answer2.getY(), 0.0, 0.000000001);
@@ -82,7 +81,7 @@ class Vec2dTest {
 
     @Test
     void getValuesTest() {
-        double[] answer = one.getValues();
+        float[] answer = one.getValues();
 
         assertEquals(answer.length, 2);
         assertEquals(answer[0], 1.0, 0.000000001);
@@ -91,17 +90,17 @@ class Vec2dTest {
 
     @Test
     void outerProductTest() {
-        Matrix2d matrix2d = one.outerProduct(one);
+        Matrix2f matrix2f = one.outerProduct(one);
 
-        assertEquals(matrix2d.get(0, 0), 1.0, 0.000000001);
-        assertEquals(matrix2d.get(1, 0), 2.0, 0.000000001);
-        assertEquals(matrix2d.get(0, 1), 2.0, 0.000000001);
-        assertEquals(matrix2d.get(1, 1), 4.0, 0.000000001);
+        assertEquals(matrix2f.get(0, 0), 1.0, 0.000000001);
+        assertEquals(matrix2f.get(1, 0), 2.0, 0.000000001);
+        assertEquals(matrix2f.get(0, 1), 2.0, 0.000000001);
+        assertEquals(matrix2f.get(1, 1), 4.0, 0.000000001);
     }
 
     @Test
     void negTest() {
-        Vec2d answer = one.neg();
+        Vec2f answer = one.neg();
 
         assertEquals(answer.getX(), -1.0, 0.000000001);
         assertEquals(answer.getY(), -2.0, 0.000000001);
@@ -109,7 +108,7 @@ class Vec2dTest {
 
     @Test
     void multiplyTest() {
-        Vec2d answer = one.multiply(one);
+        Vec2f answer = one.multiply(one);
 
         assertEquals(answer.getX(), 1.0, 0.000000001);
         assertEquals(answer.getY(), 4.0, 0.000000001);
@@ -117,7 +116,7 @@ class Vec2dTest {
 
     @Test
     void crossTest() {
-        Vec2d answer = one.cross(one);
+        Vec2f answer = one.cross(one);
 
         assertEquals(answer.getX(), 2.0, 0.000000001);
         assertEquals(answer.getY(), 2.0, 0.000000001);
@@ -125,7 +124,7 @@ class Vec2dTest {
 
     @Test
     void midpoint() {
-        Vec2d answer = one.midpoint(two);
+        Vec2f answer = one.midpoint(two);
 
         assertEquals(answer.getX(), 2.0, 0.000000001);
         assertEquals(answer.getY(), 3.0, 0.000000001);
@@ -138,17 +137,17 @@ class Vec2dTest {
     }
 
     @Test
-    void toVecfTest() {
-        Vec2f answer = one.toVecf();
+    void toVecdTest() {
+        Vec2d answer = one.toVecd();
 
         assertEquals(answer.getX(), 1.0, 0.000000001);
         assertEquals(answer.getY(), 2.0, 0.000000001);
     }
 
-    @Test
+    @Test 
     void equalsTest() {
-        Vec2d a = new Vec2d(1.0, 2.0);
-        Vec2d b = new Vec2d(1.0, 2.0);
+        Vec2f a = new Vec2f(1, 2);
+        Vec2f b = new Vec2f(1, 2);
 
         assertEquals(a, b);
     }
