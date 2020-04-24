@@ -62,15 +62,15 @@ class Vec2fTest {
     void lengthTest() {
         float answer = one.length();
 
-        assertEquals(answer, Math.sqrt(5.0), 0.000000001);
+        assertEquals(answer, Math.sqrt(5.0), 0.00001);
     }
 
     @Test
     void normaliseTest() {
         Vec2f answer = one.normalise();
 
-        assertEquals(answer.getX(), 1.0/Math.sqrt(5.0), 0.000000001);
-        assertEquals(answer.getY(), 2.0/Math.sqrt(5.0), 0.000000001);
+        assertEquals(answer.getX(),1.0f/Math.sqrt(5.0), 0.0000001);
+        assertEquals(answer.getY(),2.0f/Math.sqrt(5.0), 0.0000001);
 
         // test length being 0
         Vec2f answer2 = Vec2f.ZERO.normalise();

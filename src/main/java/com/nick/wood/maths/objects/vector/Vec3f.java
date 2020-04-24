@@ -4,13 +4,13 @@ import com.nick.wood.maths.objects.matrix.Matrix4f;
 
 import java.util.Objects;
 
-public class Vec3f {
+public class Vec3f implements Vecf {
 
-	public static final Vec3f ZERO = new Vec3f(0.0f, 0.0f, 0.0f);
-	public static final Vec3f X =    new Vec3f(1.0f, 0.0f, 0.0f);
-	public static final Vec3f Y =    new Vec3f(0.0f, 1.0f, 0.0f);
-	public static final Vec3f Z =    new Vec3f(0.0f, 0.0f, 1.0f);
-	public static final Vec3f ONE =  new Vec3f(1.0f, 1.0f, 1.0f);
+	public static final Vec3f ZERO = new Vec3f(0, 0, 0);
+	public static final Vec3f X = new Vec3f(1, 0, 0);
+	public static final Vec3f Y = new Vec3f(0, 1, 0);
+	public static final Vec3f Z = new Vec3f(0, 0, 1);
+	public static final Vec3f ONE = new Vec3f(1, 1, 1);
 
 	private final float x;
 	private final float y;
@@ -41,18 +41,22 @@ public class Vec3f {
 		return z;
 	}
 
-	public Vec3f add(Vec3f vec) {
+	public Vec3f add(Vecf vec) {
+		assert vec instanceof Vec3f;
+		Vec3f vec3f = (Vec3f) vec;
 		return new Vec3f(
-				this.x + vec.x,
-				this.y + vec.y,
-				this.z + vec.z);
+				this.x + vec3f.x,
+				this.y + vec3f.y,
+				this.z + vec3f.z);
 	}
 
-	public Vec3f subtract(Vec3f vec) {
+	public Vec3f subtract(Vecf vec) {
+		assert vec instanceof Vec3f;
+		Vec3f vec3f = (Vec3f) vec;
 		return new Vec3f(
-				this.x - vec.x,
-				this.y - vec.y,
-				this.z - vec.z);
+				this.x - vec3f.x,
+				this.y - vec3f.y,
+				this.z - vec3f.z);
 	}
 
 	public Vec3f scale(float s) {
@@ -62,11 +66,13 @@ public class Vec3f {
 				this.z * s);
 	}
 
-	public float dot(Vec3f vec) {
+	public float dot(Vecf vec) {
+		assert vec instanceof Vec3f;
+		Vec3f vec3f = (Vec3f) vec;
 		return
-				this.x * vec.getX() +
-				this.y * vec.getY() +
-				this.z * vec.getZ();
+				this.x * vec3f.getX() +
+				this.y * vec3f.getY() +
+				this.z * vec3f.getZ();
 	}
 
 	public float length2() {
@@ -81,17 +87,17 @@ public class Vec3f {
 	}
 
 	public Vec3f normalise() {
-		if (this.length() == 0.0 ) {
+		if (this.length() == 0.0f ) {
 			return Vec3f.ZERO;
 		}
-		return this.scale(1/this.length());
+		return this.scale(1f/this.length());
 	}
 
 	public float[] getValues() {
 		return new float[] {x, y, z};
 	}
 
-	public Matrix4f outerProduct(Vec3f vec3f) {
+	public Matrix4f outerProduct(Vecf vec3f) {
 
 		float[] elements = new float[16];
 
@@ -106,11 +112,13 @@ public class Vec3f {
 		return new Matrix4f(elements);
 	}
 
-	public Vec3f cross(Vec3f vec3d) {
+	public Vec3f cross(Vecf vec) {
+		assert vec instanceof Vec3f;
+		Vec3f vec3f = (Vec3f) vec;
 		return new Vec3f(
-				this.y * vec3d.z - this.z * vec3d.y,
-				this.z * vec3d.x - this.x * vec3d.z,
-				this.x * vec3d.y - this.y * vec3d.x
+				this.y * vec3f.z - this.z * vec3f.y,
+				this.z * vec3f.x - this.x * vec3f.z,
+				this.x * vec3f.y - this.y * vec3f.x
 		);
 	}
 
@@ -125,10 +133,10 @@ public class Vec3f {
 	// used for integration
 	public Matrix4f star() {
 		return new Matrix4f(
-				0.0f, -z, y, 0.0f,
-				z, 0.0f, -x, 0.0f,
-				-y, x, 0.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 1.0f
+				0, -z, y, 0,
+				z, 0, -x, 0,
+				-y, x, 0, 0,
+				0, 0, 0, 1
 		);
 	}
 
@@ -136,10 +144,10 @@ public class Vec3f {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Vec3f vec3d = (Vec3f) o;
-		return Float.compare(vec3d.x, x) == 0 &&
-				Float.compare(vec3d.y, y) == 0 &&
-				Float.compare(vec3d.z, z) == 0;
+		Vec3f vec3f = (Vec3f) o;
+		return Double.compare(vec3f.x, x) == 0 &&
+				Double.compare(vec3f.y, y) == 0 &&
+				Double.compare(vec3f.z, z) == 0;
 	}
 
 	@Override
@@ -161,15 +169,36 @@ public class Vec3f {
 	}
 
 	// element wise multiplication
-	public Vec3f multiply(Vec3f n) {
+	public Vec3f multiply(Vecf vec) {
+		assert vec instanceof Vec3f;
+		Vec3f vec3f = (Vec3f) vec;
 		return new Vec3f(
-				x * n.getX(),
-				y * n.getY(),
-				z * n.getZ()
+				x * vec3f.getX(),
+				y * vec3f.getY(),
+				z * vec3f.getZ()
 		);
 	}
 
-	public static Vec3f Min(Vec3f a, Vec3f b) {
+	@Override
+	public float get(int i) {
+		switch (i) {
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			default:
+				throw new RuntimeException(i + " is out of bounds for current vector");
+		}
+	}
+
+    @Override
+    public Vec3d toVecd() {
+        return new Vec3d(x, y, z);
+    }
+
+    public static Vec3f Min(Vec3f a, Vec3f b) {
 		return new Vec3f(
 				Math.min(a.getX(), b.getX()),
 				Math.min(a.getY(), b.getY()),
@@ -185,7 +214,8 @@ public class Vec3f {
 		);
 	}
 
-	public Vec3d toVec3d() {
-		return new Vec3d(x, y, z);
+	public double[] getValuesD() {
+		return new double[] {x, y, z};
 	}
+
 }

@@ -175,7 +175,7 @@ public class Matrix4f {
 
 	public static Matrix4f View(Vec3f pos, Vec3f rot) {
 
-		Matrix4f translation = Translation(pos.neg());
+		Matrix4f translation = Translation((Vec3f) pos.neg());
 		Matrix4f rotationX = Rotation(rot.getX(), Vec3f.X);
 		Matrix4f rotationY = Rotation(rot.getY(), Vec3f.Y);
 		Matrix4f rotationZ = Rotation(rot.getZ(), Vec3f.Z);

@@ -1,12 +1,11 @@
 package com.nick.wood.maths.objects.vector;
 
 import com.nick.wood.maths.objects.matrix.Matrix4d;
-import com.nick.wood.maths.objects.vector.Vec3d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Vec3DTest {
+class Vec3dTest {
 
 	@Test
 	void limitCreationTest() {
@@ -90,6 +89,12 @@ class Vec3DTest {
 		assertEquals(two.getX(), 0.802, 0.001);
 		assertEquals(two.getY(), 0.267, 0.001);
 		assertEquals(two.getZ(), 0.534, 0.001);
+
+        Vec3d n = Vec3d.ZERO.normalise();
+
+        assertEquals(n.getX(), 0.0, 0.0000001);
+        assertEquals(n.getY(), 0.0, 0.0000001);
+        assertEquals(n.getZ(), 0.0, 0.0000001);
 	}
 
 	@Test
@@ -216,4 +221,45 @@ class Vec3DTest {
 		assertEquals(three.getY(), 2);
 		assertEquals(three.getZ(), 1);
 	}
+
+	@Test
+    void equalsTest() {
+
+        Vec3d one = new Vec3d(1, 2, 1);
+        Vec3d two = new Vec3d(1, 2, 1);
+
+        assertEquals(one, two);
+    }
+
+    @Test
+    void getTest() {
+
+        Vec3d one = new Vec3d(1, 2, 3);
+
+        assertEquals(one.get(0), 1.0, 0.000001);
+        assertEquals(one.get(1), 2.0, 0.000001);
+        assertEquals(one.get(2), 3.0, 0.000001);
+    }
+
+    @Test
+    void toVecfTest() {
+
+        Vecf one = new Vec3d(1, 2, 3).toVecf();
+
+        assertEquals(one.get(0), 1.0, 0.000001);
+        assertEquals(one.get(1), 2.0, 0.000001);
+        assertEquals(one.get(2), 3.0, 0.000001);
+
+        assertThrows(RuntimeException.class, () -> one.get(3));
+    }
+
+    @Test
+    void getValuesFTest() {
+
+        float[] one = new Vec3d(1, 2, 3).getValuesF();
+
+        assertEquals(one[0], 1.0, 0.000001);
+        assertEquals(one[1], 2.0, 0.000001);
+        assertEquals(one[2], 3.0, 0.000001);
+    }
 }
