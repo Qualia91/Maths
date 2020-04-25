@@ -1,6 +1,7 @@
 package com.nick.wood.maths.objects.matrix;
 
 import com.nick.wood.maths.objects.vector.Vec2d;
+import com.nick.wood.maths.objects.vector.Vecd;
 
 import java.util.Arrays;
 
@@ -33,7 +34,7 @@ public class Matrix2d {
      * @return values in matrix
      */
     public double get(int x, int y) {
-        return elements[x * SIZE + y];
+        return elements[y * SIZE + x];
     }
 
     /**Function to add matrices together
@@ -73,7 +74,7 @@ public class Matrix2d {
         );
     }
 
-    /**Matrix element-wise multiplication
+    /**Matrix multiplication
      *
      * @param matrix2d
      * @return matrix2d
@@ -84,9 +85,35 @@ public class Matrix2d {
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                newElements[i * SIZE + j] =
-                        get(i, j) * matrix2d.get(j, i)+
-                                get(i + 1, j + 1) * matrix2d.get(j + 1, i + 1);
+                newElements[i * SIZE + j] = getRow(i).dot(matrix2d.getCol(j));
+            }
+        }
+
+        return new Matrix2d(newElements);
+
+    }
+
+    private Vecd getCol(int i) {
+        return new Vec2d(get(i, 0), get(i, 1));
+    }
+
+    private Vecd getRow(int i) {
+        return new Vec2d(get(0, i), get(1, i));
+    }
+
+    /**Matrix element-wise multiplication
+     *
+     * @param matrix2d
+     * @return matrix2d
+     */
+    public Matrix2d elementMultiply(Matrix2d matrix2d) {
+
+        double[] newElements = new double[SIZE*SIZE];
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                newElements[j * SIZE + i] =
+                                get(i, j) * matrix2d.get(i, j);
             }
         }
 
@@ -99,19 +126,14 @@ public class Matrix2d {
      * @param vec
      * @return matrix2d
      */
-    public Matrix2d multiply(Vec2d vec) {
+    public Vecd multiply(Vec2d vec) {
 
-        double[] newElements = new double[SIZE*SIZE];
-
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                newElements[i * SIZE + j] =
-                        get(i, j) * vec.getX() +
-                                get(i + 1, j + 1) * vec.getY();
-            }
-        }
-
-        return new Matrix2d(newElements);
+        return new Vec2d(
+                get(0, 0) * vec.getX() +
+                        get(1, 0) * vec.getY(),
+                get(0, 1) * vec.getX() +
+                        get(1, 1) * vec.getY()
+        );
 
     }
 
@@ -125,6 +147,13 @@ public class Matrix2d {
 
     }
 
+    public Matrix2f toMatrix2f() {
+        float[] newElements = new float[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            newElements[i] = (float) elements[i];
+        }
+        return new Matrix2f(newElements);
+    }
 
 
 }

@@ -6,8 +6,7 @@ class Matrix4dTest {
 
 	@Test
 	void translation() {
-
-	}
+    }
 
 	@Test
 	void rotation() {
