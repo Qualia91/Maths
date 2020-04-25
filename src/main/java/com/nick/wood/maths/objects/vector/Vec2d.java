@@ -1,7 +1,6 @@
 package com.nick.wood.maths.objects.vector;
 
 import com.nick.wood.maths.objects.matrix.Matrix2d;
-import com.nick.wood.maths.objects.matrix.Matrix4d;
 
 import java.util.Objects;
 
