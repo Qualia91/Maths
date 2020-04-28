@@ -237,4 +237,15 @@ public class Matrix4f {
 	public Vec3f getZVec() {
 		return new Vec3f(get(0,2), get(1,2), get(2,2));
 	}
+
+	public Matrix4d toMatrix4d() {
+
+		double[] newElems = new double[elements.length];
+
+		for (int i = 0; i < elements.length; i++) {
+			newElems[i] = elements[i];
+		}
+
+		return new Matrix4d(newElems);
+	}
 }
