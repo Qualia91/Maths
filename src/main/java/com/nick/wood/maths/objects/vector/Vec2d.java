@@ -142,4 +142,9 @@ public class Vec2d implements Vecd {
     public Vec2f toVecf() {
         return new Vec2f((float) x, (float) y);
     }
+
+    @Override
+    public String toString() {
+        return x + ", " + y;
+    }
 }

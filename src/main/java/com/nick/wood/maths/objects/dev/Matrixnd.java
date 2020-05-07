@@ -5,7 +5,7 @@ import com.nick.wood.maths.objects.vector.Vecd;
 
 import java.util.function.BiFunction;
 
-public class Matrixd {
+public class Matrixnd {
 
     private final int SIZE_ROW;
     private final int SIZE_COL;
@@ -17,12 +17,12 @@ public class Matrixd {
      * - Identity
      * - Empty
      */
-    public static Matrixd Identity(int size) {
-        return new Matrixd(loopAction((i, j) -> (i.equals(j)) ? 1.0 : 0.0, size, size));
+    public static Matrixnd Identity(int size) {
+        return new Matrixnd(loopAction((i, j) -> (i.equals(j)) ? 1.0 : 0.0, size, size));
     }
 
-    public static Matrixd Empty(int size) {
-        return new Matrixd(loopAction((i, j) -> 0.0, size, size));
+    public static Matrixnd Empty(int size) {
+        return new Matrixnd(loopAction((i, j) -> 0.0, size, size));
     }
 
     private static double[] loopAction(BiFunction<Integer, Integer, Double> func, int sizeRow, int sizeCol) {
@@ -43,7 +43,7 @@ public class Matrixd {
      *
      * @param elements
      */
-    public Matrixd(double... elements) {
+    public Matrixnd(double... elements) {
         assert elements.length > 3;
         double sqrtD = Math.sqrt(elements.length);
         int sqrtI = (int) sqrtD;
@@ -63,7 +63,7 @@ public class Matrixd {
      * @param colSize
      * @param elements
      */
-    public Matrixd(int rowSize, int colSize, double... elements) {
+    public Matrixnd(int rowSize, int colSize, double... elements) {
         assert elements.length > 3;
         SIZE_ROW = rowSize;
         SIZE_COL = colSize;
@@ -96,20 +96,20 @@ public class Matrixd {
      * @param vecd input vector
      * @return new Matrix2D
      */
-    public Matrixd add(Vecd vecd) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) + vecd.get(i), SIZE_ROW, SIZE_COL));
+    public Matrixnd add(Vecd vecd) {
+        return new Matrixnd(loopAction((i, j) -> get(i, j) + vecd.get(i), SIZE_ROW, SIZE_COL));
     }
 
     /**
      * Adds 2 matrices together
      *
-     * @param matrixd input matrix
+     * @param matrixnd input matrix
      * @return new Matrix2D
      */
-    public Matrixd add(Matrixd matrixd) {
-        assert SIZE_ROW == matrixd.SIZE_ROW;
-        assert SIZE_COL == matrixd.SIZE_COL;
-        return new Matrixd(loopAction((i, j) -> matrixd.get(i, j) + matrixd.get(j, i), SIZE_ROW, SIZE_COL));
+    public Matrixnd add(Matrixnd matrixnd) {
+        assert SIZE_ROW == matrixnd.SIZE_ROW;
+        assert SIZE_COL == matrixnd.SIZE_COL;
+        return new Matrixnd(loopAction((i, j) -> matrixnd.get(i, j) + matrixnd.get(j, i), SIZE_ROW, SIZE_COL));
     }
 
     /**
@@ -118,28 +118,28 @@ public class Matrixd {
      * @param s
      * @return matrix2d
      */
-    public Matrixd scale(double s) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) * s, SIZE_ROW, SIZE_COL));
+    public Matrixnd scale(double s) {
+        return new Matrixnd(loopAction((i, j) -> get(i, j) * s, SIZE_ROW, SIZE_COL));
     }
 
     /**
      * Matrix element-wise multiplication
      *
-     * @param matrixd
+     * @param matrixnd
      * @return matrixd
      */
-    public Matrixd elemMultiply(Matrixd matrixd) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) * matrixd.get(i, j), SIZE_ROW, SIZE_COL));
+    public Matrixnd elemMultiply(Matrixnd matrixnd) {
+        return new Matrixnd(loopAction((i, j) -> get(i, j) * matrixnd.get(i, j), SIZE_ROW, SIZE_COL));
     }
 
     /**
      * Matrix multiplication
      *
-     * @param matrixd
+     * @param matrixnd
      * @return matrix2d
      */
-    public Matrixd multiply(Matrixd matrixd) {
-        return new Matrixd(loopAction((i, j) -> getCol(i).dot(matrixd.getRow(j)), SIZE_ROW, SIZE_COL));
+    public Matrixnd multiply(Matrixnd matrixnd) {
+        return new Matrixnd(loopAction((i, j) -> getCol(i).dot(matrixnd.getRow(j)), SIZE_ROW, SIZE_COL));
     }
 
     /**
@@ -148,8 +148,8 @@ public class Matrixd {
      * @param vec
      * @return matrix2d
      */
-    public Matrixd multiply(Vec2d vec) {
-        return new Matrixd(loopAction((i, j) -> get(i, j) * vec.get(i) +
+    public Matrixnd multiply(Vec2d vec) {
+        return new Matrixnd(loopAction((i, j) -> get(i, j) * vec.get(i) +
                 get(i + 1, j + 1) * vec.get(i), SIZE_ROW, SIZE_COL));
     }
 
@@ -186,7 +186,7 @@ public class Matrixd {
      * @param size
      * @return
      */
-    private double det(Matrixd matrix, int size) {
+    private double det(Matrixnd matrix, int size) {
 
         if (size == 2) {
             return (matrix.get(0, 0) * matrix.get(1, 1)) - (matrix.get(1, 0) * matrix.get(0, 1));
@@ -205,7 +205,7 @@ public class Matrixd {
                         newMatrix[index++] = matrix.get(x, y);
                     }
                 }
-                sum += sign * matrix.get(i, 0) * det(new Matrixd(newMatrix), newSize);
+                sum += sign * matrix.get(i, 0) * det(new Matrixnd(newMatrix), newSize);
                 sign *= -1;
             }
             return sum;
