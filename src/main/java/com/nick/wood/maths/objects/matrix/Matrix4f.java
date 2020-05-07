@@ -145,10 +145,10 @@ public class Matrix4f {
 	}
 
 	public static Matrix4f InverseTransformation(Vec3f pos, Matrix4f rot, Vec3f scale) {
-		Matrix4f translation = Translation(pos);
+		Matrix4f translation = Translation(pos.neg());
 		Matrix4f scaleMatrix = Scale(scale);
 
-		return translation.multiply(rot).multiply(scaleMatrix);
+		return translation.multiply(rot.transpose()).multiply(scaleMatrix);
 	}
 
 	public static Matrix4f Projection(float aspect, float fov, float near, float far) {
@@ -236,5 +236,53 @@ public class Matrix4f {
 
 	public Vec3f getZVec() {
 		return new Vec3f(get(0,2), get(1,2), get(2,2));
+	}
+
+	public Matrix4d toMatrix4d() {
+
+		double[] newElems = new double[elements.length];
+
+		for (int i = 0; i < elements.length; i++) {
+			newElems[i] = elements[i];
+		}
+
+		return new Matrix4d(newElems);
+	}
+
+	public Matrix4f invert() {
+
+		// get inverse of rotation part (1/transpose)
+		float[] inverseRotation = new float[] {
+				get(0, 0), get(0, 1), get(0, 2),
+				get(1, 0), get(1, 1), get(1, 2),
+				get(2, 0), get(2, 1), get(2, 2)
+		};
+
+		// get inverse of translation parts (-ve)
+		float x = -get(3, 0);
+		float y = -get(3, 1);
+		float z = -get(3, 2);
+		float[] translationInverse = new float[] {
+				(x * inverseRotation[0]) + (y * inverseRotation[1]) + (z * inverseRotation[2]),
+				(x * inverseRotation[3]) + (y * inverseRotation[4]) + (z * inverseRotation[5]),
+				(x * inverseRotation[6]) + (y * inverseRotation[7]) + (z * inverseRotation[8])
+		};
+
+		float[] inverse = new float[] {
+				inverseRotation[0], inverseRotation[1], inverseRotation[2], translationInverse[0],
+				inverseRotation[3], inverseRotation[4], inverseRotation[5], translationInverse[1],
+				inverseRotation[6], inverseRotation[7], inverseRotation[8], translationInverse[2],
+				0, 0, 0, 1
+		};
+
+		return new Matrix4f(inverse);
+	}
+
+	private float invertDigit(float s) {
+		if (s == 0) {
+			return 0;
+		} else {
+			return 1/s;
+		}
 	}
 }

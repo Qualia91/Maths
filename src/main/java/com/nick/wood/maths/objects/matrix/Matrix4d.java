@@ -258,6 +258,17 @@ public class Matrix4d {
 		return new Vec3d(get(0,2), get(1,2), get(2,2));
 	}
 
+	public Matrix4f toMatrix4f() {
+
+		float[] newElems = new float[elements.length];
+
+		for (int i = 0; i < elements.length; i++) {
+			newElems[i] = (float) elements[i];
+		}
+
+		return new Matrix4f(newElems);
+	}
+
 	// todo implement gauss jordon elimination
 
     //public double det() {
