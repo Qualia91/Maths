@@ -1,6 +1,7 @@
 package com.nick.wood.maths.objects.matrix;
 
 import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.vector.Vec3d;
 import com.nick.wood.maths.objects.vector.Vec3f;
 
 import java.util.Arrays;
@@ -184,6 +185,20 @@ public class Matrix4f {
 		return translation.multiply(rotation);
 	}
 
+	public static Matrix4f View(Vec3f pos, Quaternion rot) {
+
+		Vec3d vec3d = rot.toVec3d();
+
+
+		Matrix4f translation = Translation((Vec3f) pos.neg());
+		Matrix4f rotationX = Rotation((float) Math.toDegrees(vec3d.getX()), Vec3f.X);
+		Matrix4f rotationY = Rotation((float) Math.toDegrees(vec3d.getY()), Vec3f.Y);
+		Matrix4f rotationZ = Rotation((float) Math.toDegrees(vec3d.getZ()), Vec3f.Z);
+		Matrix4f rotation = rotationZ.multiply(rotationY).multiply(rotationX);
+
+		return translation.multiply(rotation);
+	}
+
 	public float trace() {
 		return elements[0] + elements[5] + elements[10];
 	}
@@ -284,5 +299,13 @@ public class Matrix4f {
 		} else {
 			return 1/s;
 		}
+	}
+
+	public Vec3f getTranslation() {
+		return new Vec3f(
+				get(3, 0),
+				get(3, 1),
+				get(3, 2)
+		);
 	}
 }
