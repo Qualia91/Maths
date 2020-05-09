@@ -48,17 +48,21 @@ public class Perlin2D {
 			directionVectors[i] = point.subtract(corners[i]);
 			cornerValues[i] = cornerGrad[i].dot(directionVectors[i]);
 		}
-		double x1 = lerp(cornerValues[0], cornerValues[1], xPos);
-		double x2 = lerp(cornerValues[2], cornerValues[3], xPos);
-		return fade(lerp(x1, x2, yPos));
+
+		double fadeX = fade(xPos);
+		double fadeY = fade(yPos);
+
+		double x1 = lerp(cornerValues[0], cornerValues[1], fadeX);
+		double x2 = lerp(cornerValues[2], cornerValues[3], fadeX);
+		return lerp(x1, x2, fadeY);
 	}
 
 	private Vec2d[] gradients(int boxNumberX, int boxNumberY) {
 		Vec2d[] gradients = new Vec2d[4];
-		gradients[0] = new Vec2d(permutationX[boxNumberX + (boxNumberY * 16)], permutationY[boxNumberX + (boxNumberY * 16)]);
-		gradients[1] = new Vec2d(permutationX[boxNumberX + 1 + (boxNumberY * 16)], permutationY[boxNumberX + 1 + (boxNumberY * 16)]);
-		gradients[2] = new Vec2d(permutationX[boxNumberX + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + ((boxNumberY + 1) * 16)]);
-		gradients[3] = new Vec2d(permutationX[boxNumberX + 1 + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + 1 + ((boxNumberY + 1) * 16)]);
+		gradients[0] = new Vec2d(permutationX[boxNumberX + (boxNumberY * 16)], permutationY[boxNumberX + (boxNumberY * 16)]).normalise();
+		gradients[1] = new Vec2d(permutationX[boxNumberX + 1 + (boxNumberY * 16)], permutationY[boxNumberX + 1 + (boxNumberY * 16)]).normalise();
+		gradients[2] = new Vec2d(permutationX[boxNumberX + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + ((boxNumberY + 1) * 16)]).normalise();
+		gradients[3] = new Vec2d(permutationX[boxNumberX + 1 + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + 1 + ((boxNumberY + 1) * 16)]).normalise();
 		return gradients;
 	}
 
