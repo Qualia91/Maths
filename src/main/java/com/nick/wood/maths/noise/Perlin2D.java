@@ -21,8 +21,8 @@ public class Perlin2D {
 		permutationX = new double[size];
 		permutationY = new double[size];
 		for (int i = 0; i < size; i++) {
-			permutationX[i] = random.nextDouble();
-			permutationY[i] = random.nextDouble();
+			permutationX[i] = (random.nextDouble() * 2) - 1.0;
+			permutationY[i] = (random.nextDouble() * 2) - 1.0;
 		}
 	}
 
