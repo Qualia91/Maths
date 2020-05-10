@@ -8,6 +8,8 @@ public class Perlin2D {
 
 	private final double[] permutationX;
 	private final double[] permutationY;
+	private final int segmentSize;
+	private final int randomNumberArraySize;
 
 	Vec2d[] corners = new Vec2d[]{
 			new Vec2d(0, 0),
@@ -16,17 +18,22 @@ public class Perlin2D {
 			new Vec2d(1, 1),
 	};
 
-	public Perlin2D(int size) {
+	public Perlin2D(int randomNumberArraySize, int segmentSize) {
 		Random random = new Random(System.currentTimeMillis());
-		permutationX = new double[size];
-		permutationY = new double[size];
-		for (int i = 0; i < size; i++) {
+		this.segmentSize = segmentSize;
+		this.randomNumberArraySize = randomNumberArraySize;
+		permutationX = new double[randomNumberArraySize];
+		permutationY = new double[randomNumberArraySize];
+		for (int i = 0; i < randomNumberArraySize; i++) {
 			permutationX[i] = (random.nextDouble() * 2) - 1.0;
 			permutationY[i] = (random.nextDouble() * 2) - 1.0;
 		}
 	}
 
 	public double getPoint(double x, double y) {
+
+		x = x/segmentSize;
+		y = y/segmentSize;
 
 		int boxNumberX = (int) x;
 		int boxNumberY = (int) y;
@@ -59,10 +66,14 @@ public class Perlin2D {
 
 	private Vec2d[] gradients(int boxNumberX, int boxNumberY) {
 		Vec2d[] gradients = new Vec2d[4];
-		gradients[0] = new Vec2d(permutationX[boxNumberX + (boxNumberY * 16)], permutationY[boxNumberX + (boxNumberY * 16)]).normalise();
-		gradients[1] = new Vec2d(permutationX[boxNumberX + 1 + (boxNumberY * 16)], permutationY[boxNumberX + 1 + (boxNumberY * 16)]).normalise();
-		gradients[2] = new Vec2d(permutationX[boxNumberX + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + ((boxNumberY + 1) * 16)]).normalise();
-		gradients[3] = new Vec2d(permutationX[boxNumberX + 1 + ((boxNumberY + 1) * 16)], permutationY[boxNumberX + 1 + ((boxNumberY + 1) * 16)]).normalise();
+		int i = (boxNumberX + (boxNumberY * segmentSize)) % randomNumberArraySize;
+		gradients[0] = new Vec2d(permutationX[i], permutationY[i]).normalise();
+		i = (boxNumberX + 1 + (boxNumberY * segmentSize)) % randomNumberArraySize;
+		gradients[1] = new Vec2d(permutationX[i], permutationY[i]).normalise();
+		i = (boxNumberX + ((boxNumberY + 1) * segmentSize)) % randomNumberArraySize;
+		gradients[2] = new Vec2d(permutationX[i], permutationY[i]).normalise();
+		i = (boxNumberX + 1 + ((boxNumberY + 1) * segmentSize)) % randomNumberArraySize;
+		gradients[3] = new Vec2d(permutationX[i], permutationY[i]).normalise();
 		return gradients;
 	}
 
