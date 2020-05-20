@@ -47,7 +47,7 @@ public class Matrix4f {
 		return new Matrix4f(newElems);
 	}
 
-	private static Matrix4f Scale(Vec3f scale) {
+	public static Matrix4f Scale(Vec3f scale) {
 		return new Matrix4f(
 				scale.getX(), 0.0f, 0.0f, 0.0f,
 				0.0f, scale.getY(), 0.0f, 0.0f,
