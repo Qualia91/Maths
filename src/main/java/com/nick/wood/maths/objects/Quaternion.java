@@ -147,6 +147,35 @@ public class Quaternion {
 		return new Vec3d(q[1], q[2], q[3]);
 	}
 
+	/** returns yaw pitch roll
+	 *
+	 * @return
+	 */
+	public Vec3d toEulerAngles() {
+
+		// roll (x-axis rotation)
+		double sinr_cosp = 2 * (getS() * getI() + getJ() * getK());
+		double cosr_cosp = 1 - 2 * (getI() * getI() + getJ() * getJ());
+		double roll = Math.atan2(sinr_cosp, cosr_cosp);
+
+		// pitch (y-axis rotation)
+		double pitch;
+		double sinp = 2 * (getS() * getJ() - getK() * getI());
+		if (Math.abs(sinp) >= 1){
+			pitch = Math.copySign (Math.PI / 2, sinp); // use 90 degrees if out of range
+		}
+        else{
+			pitch = Math.asin (sinp);
+		}
+
+		// yaw (z-axis rotation)
+		double siny_cosp = 2 * (getS() * getK() + getI() * getJ());
+		double cosy_cosp = 1 - 2 * (getJ() * getJ() + getK() * getK());
+		double yaw = Math.atan2(siny_cosp, cosy_cosp);
+
+		return new Vec3d(yaw, pitch, roll);
+	}
+
 	@Override
 	public String toString() {
 		return Arrays.toString(q);
