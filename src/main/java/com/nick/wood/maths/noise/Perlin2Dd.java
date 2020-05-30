@@ -4,7 +4,7 @@ import com.nick.wood.maths.objects.vector.Vec2d;
 
 import java.util.Random;
 
-public class Perlin2D {
+public class Perlin2Dd {
 
 	private final double[] permutationX;
 	private final double[] permutationY;
@@ -18,7 +18,7 @@ public class Perlin2D {
 			new Vec2d(1, 1),
 	};
 
-	public Perlin2D(int randomNumberArraySize, int segmentSize) {
+	public Perlin2Dd(int randomNumberArraySize, int segmentSize) {
 		Random random = new Random(System.currentTimeMillis());
 		this.segmentSize = segmentSize;
 		this.randomNumberArraySize = randomNumberArraySize;
