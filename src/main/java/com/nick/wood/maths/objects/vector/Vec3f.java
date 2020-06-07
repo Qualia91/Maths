@@ -244,4 +244,8 @@ public class Vec3f implements Vecf {
 
 	}
 
+    public Vecf lerp(Vecf vecb, float percent) {
+        return (this.scale(1 - percent)).add(vecb.scale(percent));
+    }
+
 }

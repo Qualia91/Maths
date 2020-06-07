@@ -142,4 +142,9 @@ public class Vec2f implements Vecf {
     public Vec2d toVecd() {
         return new Vec2d((double) x, (double) y);
     }
+
+    @Override
+    public Vecf lerp(Vecf vecb, float percent) {
+        return (this.scale(1 - percent)).add(vecb.scale(percent));
+    }
 }

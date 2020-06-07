@@ -218,4 +218,31 @@ public class Vec3d implements Vecd {
 		return new float[] {(float) x, (float) y, (float) z};
 	}
 
+    public Vec3d reflectionOverPlane(Vec4d plane) {
+
+        // find point on plane
+        // find normal
+        Vec3d n = new Vec3d(plane.getX(), plane.getY(), plane.getZ());
+
+        // point on above type defined plane is the normal time s by the scale away from 0
+        Vec3d pointOnPlane = n.scale(plane.getS());
+
+        // find Point we want to reflect - point on plane
+        Vec3d D = this.subtract(pointOnPlane);
+
+        // Find component of D that is normal to plane
+        Vec3d Dn = n.scale(D.dot(n));
+
+        // find D reflected
+        Vec3d Dref = D.subtract(Dn.scale(2));
+
+        // now add in point on quad to find the reflected point
+        return pointOnPlane.add(Dref);
+
+    }
+
+    public Vecd lerp(Vecd vecb, double percent) {
+        return (this.scale(1 - percent)).add(vecb.scale(percent));
+    }
+
 }

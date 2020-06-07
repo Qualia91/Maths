@@ -144,6 +144,11 @@ public class Vec2d implements Vecd {
     }
 
     @Override
+    public Vecd lerp(Vecd vecb, double percent) {
+        return (this.scale(1 - percent)).add(vecb.scale(percent));
+    }
+
+    @Override
     public String toString() {
         return x + ", " + y;
     }

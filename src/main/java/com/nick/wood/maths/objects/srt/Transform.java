@@ -2,6 +2,7 @@ package com.nick.wood.maths.objects.srt;
 
 import com.nick.wood.maths.objects.QuaternionF;
 import com.nick.wood.maths.objects.matrix.Matrix4f;
+import com.nick.wood.maths.objects.matrix.Matrixd;
 import com.nick.wood.maths.objects.vector.Vec3f;
 
 public class Transform {
@@ -10,18 +11,25 @@ public class Transform {
 	private Vec3f position;
 	private Vec3f scale;
 	private QuaternionF rotation;
+	private Matrix4f SRT;
+	private boolean changed = false;
 
 	Transform( Vec3f scale, QuaternionF rotation, Vec3f position) {
 		this.scale = scale;
 		this.rotation = rotation;
 		this.position = position;
+        this.SRT = Matrix4f.Transform(position, rotation.toMatrix(), scale);
 	}
 
-	public Matrix4f getSRT() {
-		return Matrix4f.Transform(position, rotation.toMatrix(), scale);
-	}
+    public Matrix4f getSRT() {
+	    if (changed) {
+            this.SRT = Matrix4f.Transform(position, rotation.toMatrix(), scale);
+            this.changed = false;
+        }
+        return SRT;
+    }
 
-	public Vec3f getPosition() {
+    public Vec3f getPosition() {
 		return position;
 	}
 

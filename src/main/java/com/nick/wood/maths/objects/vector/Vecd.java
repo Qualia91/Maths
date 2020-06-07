@@ -8,4 +8,5 @@ public interface Vecd extends Vec<Vecd> {
     double[] getValues();
     double get(int i);
 	Vecf toVecf();
+    Vecd lerp(Vecd vecb, double percent);
 }

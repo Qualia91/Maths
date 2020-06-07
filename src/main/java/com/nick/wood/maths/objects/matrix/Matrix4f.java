@@ -137,12 +137,9 @@ public class Matrix4f {
 	}
 
 	public static Matrix4f Transform(Vec3f pos, Matrix4f rot, Vec3f scale) {
-
 		Matrix4f translation = Translation(pos);
 		Matrix4f scaleMatrix = Scale(scale);
-
 		return scaleMatrix.multiply(rot).multiply(translation);
-
 	}
 
 	public static Matrix4f InverseTransformation(Vec3f pos, Matrix4f rot, Vec3f scale) {
