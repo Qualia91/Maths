@@ -5,16 +5,16 @@ import com.nick.wood.maths.objects.vector.Vec3d;
 
 import java.util.Arrays;
 
-public class Quaternion {
+public class QuaternionD {
 
 	private final double[] q;
 
-	public static Quaternion FromVec(double s, Vec3d vec) {
-		return new Quaternion(s, vec.getX(), vec.getY(), vec.getZ());
+	public static QuaternionD FromVec(double s, Vec3d vec) {
+		return new QuaternionD(s, vec.getX(), vec.getY(), vec.getZ());
 	}
 
-	public static Quaternion Rotation(Vec3d rotationVec) {
-		return new Quaternion(rotationVec);
+	public static QuaternionD Rotation(Vec3d rotationVec) {
+		return new QuaternionD(rotationVec);
 	}
 
 	/**
@@ -23,23 +23,23 @@ public class Quaternion {
 	 * @param angle in radians
 	 * @return
 	 */
-	public static Quaternion RotationX(double angle) {
-		return new Quaternion(Math.cos(angle / 2), Math.sin(angle / 2), 0.0, 0.0);
+	public static QuaternionD RotationX(double angle) {
+		return new QuaternionD(Math.cos(angle / 2), Math.sin(angle / 2), 0.0, 0.0);
 	}
 
-	public static Quaternion RotationY(double angle) {
-		return new Quaternion(Math.cos(angle / 2), 0.0, Math.sin(angle / 2), 0.0);
+	public static QuaternionD RotationY(double angle) {
+		return new QuaternionD(Math.cos(angle / 2), 0.0, Math.sin(angle / 2), 0.0);
 	}
 
-	public static Quaternion RotationZ(double angle) {
-		return new Quaternion(Math.cos(angle / 2), 0.0, 0.0, Math.sin(angle / 2));
+	public static QuaternionD RotationZ(double angle) {
+		return new QuaternionD(Math.cos(angle / 2), 0.0, 0.0, Math.sin(angle / 2));
 	}
 
-	public Quaternion normalise() {
+	public QuaternionD normalise() {
 		return this.scale(1 / this.len());
 	}
 
-	public Quaternion(double s, double i, double j, double k) {
+	public QuaternionD(double s, double i, double j, double k) {
 		q = new double[4];
 		q[0] = s;
 		q[1] = i;
@@ -63,28 +63,28 @@ public class Quaternion {
 		return q[3];
 	}
 
-	private Quaternion(double... q) {
+	private QuaternionD(double... q) {
 		this.q = q;
 	}
 
-	public Quaternion(Vec3d vec) {
+	public QuaternionD(Vec3d vec) {
 		this.q = new double[]{0.0, vec.getX(), vec.getY(), vec.getZ()};
 	}
 
-	public Quaternion rotateVector(Quaternion vector) {
+	public QuaternionD rotateVector(QuaternionD vector) {
 		return this.multiply(vector.multiply(this.conjugate()));
 	}
 
-	public Quaternion add(Quaternion p) {
-		return new Quaternion(
+	public QuaternionD add(QuaternionD p) {
+		return new QuaternionD(
 				q[0] + p.getQ()[0],
 				q[1] + p.getQ()[1],
 				q[2] + p.getQ()[2],
 				q[3] + p.getQ()[3]);
 	}
 
-	public Quaternion multiply(Quaternion p) {
-		return new Quaternion(
+	public QuaternionD multiply(QuaternionD p) {
+		return new QuaternionD(
 				(q[0] * p.getQ()[0]) - (q[1] * p.getQ()[1]) - (q[2] * p.getQ()[2]) - (q[3] * p.getQ()[3]),
 				(q[1] * p.getQ()[0]) + (q[0] * p.getQ()[1]) + (q[2] * p.getQ()[3]) - (q[3] * p.getQ()[2]),
 				(q[0] * p.getQ()[2]) - (q[1] * p.getQ()[3]) + (q[2] * p.getQ()[0]) + (q[3] * p.getQ()[1]),
@@ -119,12 +119,12 @@ public class Quaternion {
 
 	}
 
-	public Quaternion scale(double s) {
-		return new Quaternion(q[0] * s, q[1] * s, q[2] * s, q[3] * s);
+	public QuaternionD scale(double s) {
+		return new QuaternionD(q[0] * s, q[1] * s, q[2] * s, q[3] * s);
 	}
 
-	public Quaternion conjugate() {
-		return new Quaternion(q[0], -q[1], -q[2], -q[3]);
+	public QuaternionD conjugate() {
+		return new QuaternionD(q[0], -q[1], -q[2], -q[3]);
 	}
 
 	public double len2() {
@@ -135,7 +135,7 @@ public class Quaternion {
 		return Math.sqrt(len2());
 	}
 
-	public Quaternion inverse() {
+	public QuaternionD inverse() {
 		return conjugate().scale(1 / len());
 	}
 

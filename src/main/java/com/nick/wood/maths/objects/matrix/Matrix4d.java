@@ -1,6 +1,6 @@
 package com.nick.wood.maths.objects.matrix;
 
-import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.QuaternionD;
 import com.nick.wood.maths.objects.vector.Vec3d;
 
 import java.util.Arrays;
@@ -208,7 +208,7 @@ public class Matrix4d {
 		return elements[0] + elements[5] + elements[10];
 	}
 
-	public Quaternion toQuaternion() {
+	public QuaternionD toQuaternion() {
 		double trace = trace();
 		double traceAddition = (1 - trace) / 4.0;
 		double q0 = Math.sqrt((trace + 1.0) / 4.0);
@@ -216,7 +216,7 @@ public class Matrix4d {
 		double q2 = Math.sqrt((elements[5]/2) + traceAddition);
 		double q3 = Math.sqrt((elements[10]/2) + traceAddition);
 
-		return new Quaternion(q0, q1, q2, q3);
+		return new QuaternionD(q0, q1, q2, q3);
 
 	}
 

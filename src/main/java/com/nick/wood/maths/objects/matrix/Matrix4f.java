@@ -1,6 +1,6 @@
 package com.nick.wood.maths.objects.matrix;
 
-import com.nick.wood.maths.objects.Quaternion;
+import com.nick.wood.maths.objects.QuaternionD;
 import com.nick.wood.maths.objects.vector.Vec3d;
 import com.nick.wood.maths.objects.vector.Vec3f;
 
@@ -185,7 +185,7 @@ public class Matrix4f {
 		return translation.multiply(rotation);
 	}
 
-	public static Matrix4f View(Vec3f pos, Quaternion rot) {
+	public static Matrix4f View(Vec3f pos, QuaternionD rot) {
 
 		Vec3d vec3d = rot.toVec3d();
 
@@ -203,7 +203,7 @@ public class Matrix4f {
 		return elements[0] + elements[5] + elements[10];
 	}
 
-	public Quaternion toQuaternion() {
+	public QuaternionD toQuaternion() {
 		double trace = trace();
 		double traceAddition = (1 - trace) / 4.0;
 		double q0 = Math.sqrt((trace + 1.0) / 4.0);
@@ -211,7 +211,7 @@ public class Matrix4f {
 		double q2 = Math.sqrt((elements[5]/2) + traceAddition);
 		double q3 = Math.sqrt((elements[10]/2) + traceAddition);
 
-		return new Quaternion(q0, q1, q2, q3);
+		return new QuaternionD(q0, q1, q2, q3);
 
 	}
 
@@ -306,6 +306,15 @@ public class Matrix4f {
 				get(3, 0),
 				get(3, 1),
 				get(3, 2)
+		);
+	}
+
+	public Matrix4f scale(float s) {
+		return new Matrix4f(
+				get(0,0) * s, get(1,0) * s, get(2,0) * s, get(3,0) * s,
+				get(0,1) * s, get(1,1) * s, get(2,1) * s, get(3,1) * s,
+				get(0,2) * s, get(1,2) * s, get(2,2) * s, get(3,2) * s,
+				get(0,3) * s, get(1,3) * s, get(2,3) * s, get(3,3) * s
 		);
 	}
 }
