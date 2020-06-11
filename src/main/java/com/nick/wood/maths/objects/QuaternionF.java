@@ -186,6 +186,22 @@ public class QuaternionF {
 		return new Vec3f(yaw, pitch, roll);
 	}
 
+	public float dot(QuaternionF q2) {
+	    return getI() * q2.getI() + getJ() * q2.getJ() +
+                getK() * q2.getK() + getS() * q2.getS();
+    }
+
+	public QuaternionF lerp(QuaternionF q2, float percent) {
+        return (this.scale(1 - percent).add(q2)).normalise();
+    }
+
+    public QuaternionF slerp(QuaternionF q2, float percent) {
+	    double theta = dot(q2);
+	    float wp = (float) (Math.sin(1 - percent) * theta / Math.sin(theta));
+	    float wq = (float) (Math.sin(percent) * theta / Math.sin(theta));
+        return (this.scale(wp).add(q2.scale(wq))).normalise();
+    }
+
 	@Override
 	public String toString() {
 		return Arrays.toString(q);
