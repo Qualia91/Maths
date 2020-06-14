@@ -193,6 +193,19 @@ public class Matrix4d {
 
 	}
 
+	public Matrix4d updateProjection(double aspect, double fov) {
+
+		double tanHalfFov = Math.tan(fov / 2.0);
+
+		return new Matrix4d(
+				1.0 / (aspect * tanHalfFov), 0, 0, 0,
+				0, this.get(1, 1), 0, 0,
+				0, 0, this.get(2, 2), this.get(3, 2),
+				0, 0, -1, 0
+		);
+
+	}
+
 	public static Matrix4d View(Vec3d pos, Vec3d rot) {
 
 		Matrix4d translation = Translation(pos.neg());

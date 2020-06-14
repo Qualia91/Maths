@@ -28,6 +28,11 @@ public class TransformBuilder {
 		return this;
 	}
 
+	public TransformBuilder setScale(float scale) {
+		this.scale = new Vec3f(scale, scale, scale);
+		return this;
+	}
+
 	public TransformBuilder setRotation(QuaternionF rotation) {
 		this.rotation = rotation;
 		return this;
@@ -35,5 +40,27 @@ public class TransformBuilder {
 
 	public Transform build() {
 		return new Transform(scale, rotation, position);
+	}
+
+	public TransformBuilder resetPosition() {
+		this.position = Vec3f.ZERO;
+		return this;
+	}
+
+	public TransformBuilder resetScale() {
+		this.scale = Vec3f.ONE;
+		return this;
+	}
+
+	public TransformBuilder resetRotation() {
+		this.rotation = QuaternionF.Identity;
+		return this;
+	}
+
+	public TransformBuilder reset() {
+		this.position = Vec3f.ZERO;
+		this.rotation = QuaternionF.Identity;
+		this.scale = Vec3f.ONE;
+		return this;
 	}
 }

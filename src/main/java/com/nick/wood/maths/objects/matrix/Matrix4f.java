@@ -163,6 +163,19 @@ public class Matrix4f {
 
 	}
 
+	public Matrix4f updateProjection(float aspect, float fov) {
+
+		float tanHalfFov = (float) Math.tan(fov / 2.0);
+
+		return new Matrix4f(
+				1.0f / (aspect * tanHalfFov), 0.0f, 0.0f, 0.0f,
+				0.0f, this.get(1, 1), 0.0f, 0.0f,
+				0.0f, 0.0f, this.get(2, 2), this.get(3, 2),
+				0.0f, 0.0f, -1.0f, 0.0f
+		);
+
+	}
+
 	public Vec3f rotate(Vec3f vec) {
 		return new Vec3f(
 				(vec.getX() * this.elements[0]) + (vec.getY() * this.elements[1]) + (vec.getZ() * this.elements[2]),

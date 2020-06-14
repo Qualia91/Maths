@@ -26,15 +26,33 @@ public class QuaternionF {
 	 * @return
 	 */
 	public static QuaternionF RotationX(float angle) {
-		return new QuaternionF(Math.cos(angle / 2), Math.sin(angle / 2), 0.0, 0.0);
+		return new QuaternionF(Math.cos(angle / 2.0), Math.sin(angle / 2.0), 0.0, 0.0);
 	}
 
 	public static QuaternionF RotationY(float angle) {
-		return new QuaternionF(Math.cos(angle / 2), 0.0, Math.sin(angle / 2), 0.0);
+		return new QuaternionF(Math.cos(angle / 2.0), 0.0, Math.sin(angle / 2.0), 0.0);
 	}
 
 	public static QuaternionF RotationZ(float angle) {
-		return new QuaternionF(Math.cos(angle / 2), 0.0, 0.0, Math.sin(angle / 2));
+		return new QuaternionF(Math.cos(angle / 2.0), 0.0, 0.0, Math.sin(angle / 2.0));
+	}
+
+	/**
+	 * In radians
+	 *
+	 * @param angle in radians
+	 * @return
+	 */
+	public static QuaternionF RotationX(double angle) {
+		return new QuaternionF(Math.cos(angle / 2.0), Math.sin(angle / 2.0), 0.0, 0.0);
+	}
+
+	public static QuaternionF RotationY(double angle) {
+		return new QuaternionF(Math.cos(angle / 2.0), 0.0, Math.sin(angle / 2.0), 0.0);
+	}
+
+	public static QuaternionF RotationZ(double angle) {
+		return new QuaternionF(Math.cos(angle / 2.0), 0.0, 0.0, Math.sin(angle / 2.0));
 	}
 
 	public QuaternionF normalise() {

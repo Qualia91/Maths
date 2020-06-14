@@ -34,6 +34,7 @@ public class Transform {
 	}
 
 	public void setPosition(Vec3f position) {
+		this.changed = true;
 		this.position = position;
 	}
 
@@ -42,6 +43,7 @@ public class Transform {
 	}
 
 	public void setScale(Vec3f scale) {
+		this.changed = true;
 		this.scale = scale;
 	}
 
@@ -50,7 +52,30 @@ public class Transform {
 	}
 
 	public void setRotation(QuaternionF rotation) {
+		this.changed = true;
 		this.rotation = rotation;
+	}
+
+	public void resetPosition() {
+		this.changed = true;
+		this.position = Vec3f.ZERO;
+	}
+
+	public void resetScale() {
+		this.changed = true;
+		this.scale = Vec3f.ONE;
+	}
+
+	public void resetRotation() {
+		this.changed = true;
+		this.rotation = QuaternionF.Identity;
+	}
+
+	public void reset() {
+		this.changed = true;
+		this.position = Vec3f.ZERO;
+		this.rotation = QuaternionF.Identity;
+		this.scale = Vec3f.ONE;
 	}
 
 }
