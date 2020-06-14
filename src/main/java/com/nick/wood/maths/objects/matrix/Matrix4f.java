@@ -1,6 +1,7 @@
 package com.nick.wood.maths.objects.matrix;
 
 import com.nick.wood.maths.objects.QuaternionD;
+import com.nick.wood.maths.objects.QuaternionF;
 import com.nick.wood.maths.objects.vector.Vec3d;
 import com.nick.wood.maths.objects.vector.Vec3f;
 
@@ -55,6 +56,15 @@ public class Matrix4f {
 				0.0f, 0.0f, 0.0f, 1.0f
 		);
 	}
+
+    public static Matrix4f InverseScale(Vec3f scale) {
+        return new Matrix4f(
+                1.0f/scale.getX(), 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f/scale.getY(), 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f/scale.getZ(), 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+        );
+    }
 
 	public Matrix4f add(Matrix4f matrix) {
 
@@ -144,10 +154,17 @@ public class Matrix4f {
 
 	public static Matrix4f InverseTransformation(Vec3f pos, Matrix4f rot, Vec3f scale) {
 		Matrix4f translation = Translation(pos.neg());
-		Matrix4f scaleMatrix = Scale(scale);
+		Matrix4f scaleMatrix = InverseScale(scale);
 
 		return translation.multiply(rot.transpose()).multiply(scaleMatrix);
 	}
+
+    public static Matrix4f InverseTransformation(Vec3f pos, QuaternionF rot, Vec3f scale) {
+        Matrix4f translation = Translation(pos.neg());
+        Matrix4f scaleMatrix = InverseScale(scale);
+
+        return translation.multiply(rot.inverse().toMatrix()).multiply(scaleMatrix);
+    }
 
 	public static Matrix4f Projection(float aspect, float fov, float near, float far) {
 
@@ -186,24 +203,10 @@ public class Matrix4f {
 
 	public static Matrix4f View(Vec3f pos, Vec3f rot) {
 
-		Matrix4f translation = Translation((Vec3f) pos.neg());
+		Matrix4f translation = Translation(pos.neg());
 		Matrix4f rotationX = Rotation(rot.getX(), Vec3f.X);
 		Matrix4f rotationY = Rotation(rot.getY(), Vec3f.Y);
 		Matrix4f rotationZ = Rotation(rot.getZ(), Vec3f.Z);
-		Matrix4f rotation = rotationZ.multiply(rotationY).multiply(rotationX);
-
-		return translation.multiply(rotation);
-	}
-
-	public static Matrix4f View(Vec3f pos, QuaternionD rot) {
-
-		Vec3d vec3d = rot.toVec3d();
-
-
-		Matrix4f translation = Translation((Vec3f) pos.neg());
-		Matrix4f rotationX = Rotation((float) Math.toDegrees(vec3d.getX()), Vec3f.X);
-		Matrix4f rotationY = Rotation((float) Math.toDegrees(vec3d.getY()), Vec3f.Y);
-		Matrix4f rotationZ = Rotation((float) Math.toDegrees(vec3d.getZ()), Vec3f.Z);
 		Matrix4f rotation = rotationZ.multiply(rotationY).multiply(rotationX);
 
 		return translation.multiply(rotation);
@@ -274,6 +277,7 @@ public class Matrix4f {
 		return new Matrix4d(newElems);
 	}
 
+	// only works for affine transformations
 	public Matrix4f invert() {
 
 		// get inverse of rotation part (1/transpose)
