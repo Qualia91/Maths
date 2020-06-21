@@ -233,9 +233,6 @@ public class Vec3f implements Vecf {
 		// Find component of D that is normal to plane
 		Vec3f Dn = n.scale(D.dot(n));
 
-		// find the part of D parallel to the plane normal
-		Vec3f Dp = D.subtract(Dn);
-
 		// find D reflected
 		Vec3f Dref = D.subtract(Dn.scale(2));
 
@@ -247,5 +244,4 @@ public class Vec3f implements Vecf {
     public Vecf lerp(Vecf vecb, float percent) {
         return (this.scale(1 - percent)).add(vecb.scale(percent));
     }
-
 }
