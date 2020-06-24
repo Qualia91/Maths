@@ -186,7 +186,7 @@ public class Matrix4f {
 
 		return new Matrix4f(
 				1.0f / (aspect * tanHalfFov), 0.0f, 0.0f, 0.0f,
-				0.0f, this.get(1, 1), 0.0f, 0.0f,
+				0.0f, 1.0f / tanHalfFov, 0.0f, 0.0f,
 				0.0f, 0.0f, this.get(2, 2), this.get(3, 2),
 				0.0f, 0.0f, -1.0f, 0.0f
 		);

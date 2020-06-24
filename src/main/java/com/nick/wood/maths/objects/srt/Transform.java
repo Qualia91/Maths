@@ -13,9 +13,9 @@ public class Transform {
 	private QuaternionF rotation;
 	private Matrix4f SRT;
 	private Matrix4f invSRT;
-	private boolean changed = false;
+	private boolean changed = true;
 
-	Transform( Vec3f scale, QuaternionF rotation, Vec3f position) {
+	public Transform( Vec3f scale, QuaternionF rotation, Vec3f position) {
 		this.scale = scale;
 		this.rotation = rotation;
 		this.position = position;
