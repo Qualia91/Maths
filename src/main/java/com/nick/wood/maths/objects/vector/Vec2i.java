@@ -87,9 +87,18 @@ public class Vec2i {
 				vec2i.y == y;
 	}
 
+	public int distance2AwayFrom(Vec2i chunkIndex) {
+		int xDiff = x - chunkIndex.getX();
+		int yDiff = y - chunkIndex.getY();
+		return (xDiff * xDiff) + (yDiff * yDiff);
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(x, y);
+		int hashCode = 23;
+		hashCode = hashCode * 31 + x;
+		hashCode = hashCode * 31 + y;
+		return hashCode;
 	}
 
     public int get(int i) {
@@ -100,4 +109,5 @@ public class Vec2i {
     public String toString() {
         return x + ", " + y;
     }
+
 }
