@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 public class QuaternionD {
 
+	public static final QuaternionD Identity = new QuaternionD(1, 0, 0, 0);
+
 	private final double[] q;
 
 	public static QuaternionD FromVec(double s, Vec3d vec) {
@@ -145,6 +147,10 @@ public class QuaternionD {
 
 	public Vec3d toVec3d() {
 		return new Vec3d(q[1], q[2], q[3]);
+	}
+
+	public QuaternionF toQuatF() {
+		return new QuaternionF(q[0], q[1], q[2], q[3]);
 	}
 
 	/** returns yaw pitch roll

@@ -175,6 +175,10 @@ public class QuaternionF {
 		return new Vec3f(q[1], q[2], q[3]);
 	}
 
+	public QuaternionD toQuatD() {
+		return new QuaternionD(q[0], q[1], q[2], q[3]);
+	}
+
 	/** returns yaw pitch roll
 	 *
 	 * @return
