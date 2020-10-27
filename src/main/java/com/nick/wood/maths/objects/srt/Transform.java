@@ -15,19 +15,19 @@ public class Transform {
 	private Matrix4f invSRT;
 	private boolean changed = true;
 
-	public Transform( Vec3f scale, QuaternionF rotation, Vec3f position) {
+	public Transform(Vec3f scale, QuaternionF rotation, Vec3f position) {
 		this.scale = scale;
 		this.rotation = rotation;
 		this.position = position;
 	}
 
-    public Matrix4f getInvSRT() {
-        if (changed) {
-            this.SRT = Matrix4f.Transform(position, rotation.toMatrix(), scale);
-            this.changed = false;
-        }
-        return SRT;
-    }
+//    public Matrix4f getInvSRT() {
+//        if (changed) {
+//            this.invSRT = Matrix4f.Transform(position, rotation.toMatrix(), scale);
+//            this.changed = false;
+//        }
+//        return invSRT;
+//    }
 
     public Matrix4f getSRT() {
 	    if (changed) {

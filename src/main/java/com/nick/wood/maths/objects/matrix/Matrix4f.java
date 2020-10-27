@@ -213,18 +213,51 @@ public class Matrix4f {
 	}
 
 	public float trace() {
-		return elements[0] + elements[5] + elements[10];
+		return get(0, 0) + get(1, 1) + get(2, 2);
 	}
 
-	public QuaternionD toQuaternion() {
-		double trace = trace();
-		double traceAddition = (1 - trace) / 4.0;
-		double q0 = Math.sqrt((trace + 1.0) / 4.0);
-		double q1 = Math.sqrt((elements[0]/2) + traceAddition);
-		double q2 = Math.sqrt((elements[5]/2) + traceAddition);
-		double q3 = Math.sqrt((elements[10]/2) + traceAddition);
+	// from https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
+	public QuaternionF toQuaternion() {
 
-		return new QuaternionD(q0, q1, q2, q3);
+		float q0;
+		float q1;
+		float q2;
+		float q3;
+
+		// check that trace is bigger than 0
+		float trace = trace();
+		if (trace > 0) {
+			// if it is, the matrix is a pure rotation and so you can use the simple conversion
+			// this version is used to reduce numerical errors when dividing by really small numbers
+			float traceAddition = (float) (Math.sqrt(trace + 1) * 2.0);
+			q0 = traceAddition * 0.25f;
+			float q04 = 4 * q0;
+			q1 = get(2, 1) - get(1, 2) / q04;
+			q2 = get(0, 2) - get(2, 0) / q04;
+			q3 = get(1, 0) - get(0, 1) / q04;
+		}
+		// if the trace is less than or equal to 0, identify which major diagonal element has the greatest value
+		else if ((get(0, 0) > get(1, 1) & get(0, 0) > get(2, 2))) {
+			float S = (float) (Math.sqrt(1.0 + get(0, 0) - get(1, 1) - get(2, 2)) * 2); // S=4*qx
+			q0 = (get(2, 1) - get(1, 2)) / S;
+			q1 = 0.25f * S;
+			q2 = (get(0, 1) + get(1, 0)) / S;
+			q3 = (get(0, 2) + get(2, 0)) / S;
+		} else if (get(1, 1) > get(2, 2)) {
+			float S = (float) (Math.sqrt(1.0 + get(1, 1) - get(0, 0) - get(2, 2)) * 2); // S=4*qy
+			q0 = (get(0, 2) - get(2, 0)) / S;
+			q1 = (get(0, 1) + get(1, 0)) / S;
+			q2 = 0.25f * S;
+			q3 = (get(1, 2) + get(2, 1)) / S;
+		} else {
+			float S = (float) (Math.sqrt(1.0 + get(2, 2) - get(0, 0) - get(1, 1)) * 2); // S=4*qz
+			q0 = (get(1, 0) - get(0, 1)) / S;
+			q1 = (get(0, 2) + get(2, 0)) / S;
+			q2 = (get(1, 2) + get(2, 1)) / S;
+			q3 = 0.25f * S;
+		}
+
+		return new QuaternionF(q0, q1, q2, q3);
 
 	}
 

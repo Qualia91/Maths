@@ -1,6 +1,7 @@
 package com.nick.wood.maths.objects.matrix;
 
 import com.nick.wood.maths.objects.QuaternionD;
+import com.nick.wood.maths.objects.QuaternionF;
 import com.nick.wood.maths.objects.vector.Vec3d;
 
 import java.util.Arrays;
@@ -187,7 +188,7 @@ public class Matrix4d {
 		return new Matrix4d(
 				1.0 / (aspect * tanHalfFov), 0.0, 0.0, 0.0,
 				0.0, 1.0 / tanHalfFov, 0.0, 0.0,
-				0.0, 0.0, - (far + near)/farNearDel, - (2 * far * near) / farNearDel,
+				0.0, 0.0, -(far + near) / farNearDel, -(2 * far * near) / farNearDel,
 				0.0, 0.0, -1.0, 0.0
 		);
 
@@ -222,14 +223,47 @@ public class Matrix4d {
 	}
 
 	public QuaternionD toQuaternion() {
+
+		double q0;
+		double q1;
+		double q2;
+		double q3;
+
+		// check that trace is bigger than 0
 		double trace = trace();
-		double traceAddition = (1 - trace) / 4.0;
-		double q0 = Math.sqrt((trace + 1.0) / 4.0);
-		double q1 = Math.sqrt((elements[0]/2) + traceAddition);
-		double q2 = Math.sqrt((elements[5]/2) + traceAddition);
-		double q3 = Math.sqrt((elements[10]/2) + traceAddition);
+		if (trace > 0) {
+			// if it is, the matrix is a pure rotation and so you can use the simple conversion
+			// this version is used to reduce numerical errors when dividing by really small numbers
+			double traceAddition = Math.sqrt(trace + 1) * 2.0;
+			q0 = traceAddition * 0.25;
+			double q04 = 4 * q0;
+			q1 = get(2, 1) - get(1, 2) / q04;
+			q2 = get(0, 2) - get(2, 0) / q04;
+			q3 = get(1, 0) - get(0, 1) / q04;
+		}
+		// if the trace is less than or equal to 0, identify which major diagonal element has the greatest value
+		else if ((get(0, 0) > get(1, 1) & get(0, 0) > get(2, 2))) {
+			double S = Math.sqrt(1.0 + get(0, 0) - get(1, 1) - get(2, 2)) * 2; // S=4*qx
+			q0 = (get(2, 1) - get(1, 2)) / S;
+			q1 = 0.25 * S;
+			q2 = (get(0, 1) + get(1, 0)) / S;
+			q3 = (get(0, 2) + get(2, 0)) / S;
+		} else if (get(1, 1) > get(2, 2)) {
+			double S = Math.sqrt(1.0 + get(1, 1) - get(0, 0) - get(2, 2)) * 2; // S=4*qy
+			q0 = (get(0, 2) - get(2, 0)) / S;
+			q1 = (get(0, 1) + get(1, 0)) / S;
+			q2 = 0.25 * S;
+			q3 = (get(1, 2) + get(2, 1)) / S;
+		} else {
+			double S = Math.sqrt(1.0 + get(2, 2) - get(0, 0) - get(1, 1)) * 2; // S=4*qz
+			q0 = (get(1, 0) - get(0, 1)) / S;
+			q1 = (get(0, 2) + get(2, 0)) / S;
+			q2 = (get(1, 2) + get(2, 1)) / S;
+			q3 = 0.25 * S;
+		}
 
 		return new QuaternionD(q0, q1, q2, q3);
+
 
 	}
 
@@ -260,15 +294,15 @@ public class Matrix4d {
 	}
 
 	public Vec3d getXVec() {
-		return new Vec3d(get(0,0), get(1,0), get(2,0));
+		return new Vec3d(get(0, 0), get(1, 0), get(2, 0));
 	}
 
 	public Vec3d getYVec() {
-		return new Vec3d(get(0,1), get(1,1), get(2,1));
+		return new Vec3d(get(0, 1), get(1, 1), get(2, 1));
 	}
 
 	public Vec3d getZVec() {
-		return new Vec3d(get(0,2), get(1,2), get(2,2));
+		return new Vec3d(get(0, 2), get(1, 2), get(2, 2));
 	}
 
 	public Matrix4f toMatrix4f() {
@@ -284,14 +318,13 @@ public class Matrix4d {
 
 	// todo implement gauss jordon elimination
 
-    //public double det() {
+	//public double det() {
 
-    //}
+	//}
 
-    // adjugate matrix method
+	// adjugate matrix method
 	//public Matrix4d inverse() {
 
 
-
-    //}
+	//}
 }
