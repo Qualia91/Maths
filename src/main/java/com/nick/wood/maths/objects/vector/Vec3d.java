@@ -198,6 +198,10 @@ public class Vec3d implements Vecd {
         return new Vec3f((float) x, (float) y, (float) z);
     }
 
+    public Vec3f toVec3f() {
+		return new Vec3f((float) x, (float) y, (float) z);
+    }
+
     public static Vec3d Min(Vec3d a, Vec3d b) {
 		return new Vec3d(
 				Math.min(a.getX(), b.getX()),
