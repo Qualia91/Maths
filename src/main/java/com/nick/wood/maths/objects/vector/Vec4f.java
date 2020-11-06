@@ -69,7 +69,7 @@ public class Vec4f {
 	}
 
 	public float[] getValues() {
-		return new float[] {x, y, z};
+		return new float[] {x, y, z, s};
 	}
 
 	public Matrix4f outerProduct(Vecf vec3f) {
