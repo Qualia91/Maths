@@ -166,7 +166,7 @@ public class Matrix4f {
         return translation.multiply(rot.inverse().toMatrix()).multiply(scaleMatrix);
     }
 
-	public static Matrix4f Projection(float aspect, float fov, float near, float far) {
+	public static Matrix4f PerspectiveProjection(float aspect, float fov, float near, float far) {
 
 		float tanHalfFov = (float) Math.tan(fov / 2.0);
 		float farNearDel = far - near;
@@ -180,7 +180,23 @@ public class Matrix4f {
 
 	}
 
-	public Matrix4f updateProjection(float aspect, float fov) {
+	public static Matrix4f OrthographicProjection(float width, float height, float near, float far) {
+
+		float right = width;
+		float top = -height;
+		float left = -width;
+		float bottom = height;
+
+		return new Matrix4f(
+				2 / (right - left), 0.0f, 0.0f, - (right + left) / (right - left),
+				0.0f, 2 / (top - bottom), 0.0f, - (top + bottom) / (top - bottom),
+				0.0f, 0.0f, -2 / (far - near), - (far + near) / (far - near),
+				0.0f, 0.0f, 0.0f, 1
+		);
+
+	}
+
+	public Matrix4f updatePerspectiveProjection(float aspect, float fov) {
 
 		float tanHalfFov = (float) Math.tan(fov / 2.0);
 
