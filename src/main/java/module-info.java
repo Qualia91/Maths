@@ -1,10 +1,10 @@
-module com.nick.wood.maths {
-	exports com.nick.wood.maths.differential_equation_solvers;
-	exports com.nick.wood.maths.objects;
-	exports com.nick.wood.maths.objects.srt;
-	exports com.nick.wood.maths.objects.matrix;
-	exports com.nick.wood.maths.objects.dev;
-	exports com.nick.wood.maths.objects.vector;
-	exports com.nick.wood.maths.noise;
-	exports com.nick.wood.maths.points_on_a_sphere;
+module com.boc_dev.maths {
+	exports com.boc_dev.maths.differential_equation_solvers;
+	exports com.boc_dev.maths.objects;
+	exports com.boc_dev.maths.objects.srt;
+	exports com.boc_dev.maths.objects.matrix;
+	exports com.boc_dev.maths.objects.dev;
+	exports com.boc_dev.maths.objects.vector;
+	exports com.boc_dev.maths.noise;
+	exports com.boc_dev.maths.points_on_a_sphere;
 }
