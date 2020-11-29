@@ -29,10 +29,22 @@ public class QuaternionF {
 		return new QuaternionF(Math.cos(angle / 2.0), Math.sin(angle / 2.0), 0.0, 0.0);
 	}
 
+	/**
+	 * In radians
+	 *
+	 * @param angle in radians
+	 * @return
+	 */
 	public static QuaternionF RotationY(float angle) {
 		return new QuaternionF(Math.cos(angle / 2.0), 0.0, Math.sin(angle / 2.0), 0.0);
 	}
 
+	/**
+	 * In radians
+	 *
+	 * @param angle in radians
+	 * @return
+	 */
 	public static QuaternionF RotationZ(float angle) {
 		return new QuaternionF(Math.cos(angle / 2.0), 0.0, 0.0, Math.sin(angle / 2.0));
 	}
