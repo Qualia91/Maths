@@ -80,6 +80,7 @@ public class Perlin3D {
 	}
 
 	private Vec3d[] gradients(int boxNumberX, int boxNumberY, int boxNumberZ) {
+
 		Vec3d[] gradients = new Vec3d[8];
 
 		gradients[0] = new Vec3d(
