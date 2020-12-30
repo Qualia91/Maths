@@ -84,7 +84,7 @@
         <repository>
             <id>github</id>
             <name>Github Qualia91 Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/qualia91/Maths</url>
+            <url>https://maven.pkg.github.com/qualia91/com.boc_dev.maths</url>
         </repository>
     </distributionManagement>
 

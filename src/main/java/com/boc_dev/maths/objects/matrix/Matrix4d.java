@@ -66,6 +66,17 @@ public class Matrix4d {
 		return new Matrix4d(newElements);
 	}
 
+	public Matrix4d subtract(Matrix4d matrix) {
+
+		double[] newElements = new double[16];
+
+		for (int i = 0; i < this.elements.length; i++) {
+			newElements[i] = this.elements[i] - matrix.getValues()[i];
+		}
+
+		return new Matrix4d(newElements);
+	}
+
 	public Matrix4d add(Vec3d vec3d) {
 		return new Matrix4d(
 				elements[0] + vec3d.getX(), elements[1], elements[2], elements[3],
