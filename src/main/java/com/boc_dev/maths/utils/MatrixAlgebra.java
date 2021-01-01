@@ -4,7 +4,7 @@ import com.boc_dev.maths.objects.matrix.Matrix4d;
 
 public class MatrixAlgebra {
 
-	void diagonalize(Matrix4d matrix, double[] returnMatrix) {
+	public static void diagonalize(Matrix4d matrix, double[] returnMatrix) {
 
 		for (int ii = 0; ii < 36; ii++) {
 
@@ -18,7 +18,7 @@ public class MatrixAlgebra {
 
 	}
 
-	void inverseOfDiagonalMatrix(double[] matrix) {
+	public static void inverseOfDiagonalMatrix(double[] matrix) {
 
 		for (int ii = 0; ii < 36; ii++) {
 
@@ -38,7 +38,7 @@ public class MatrixAlgebra {
 	*
 	*/
 
-	double daigonals(int i, double a_ii, double[] r) {
+	public static double daigonals(int i, double a_ii, double[] r) {
 
 		double summation = 0;
 
@@ -51,7 +51,7 @@ public class MatrixAlgebra {
 		return Math.sqrt(a_ii - summation);
 	}
 
-	double offDaigonals(int i, int j, double a_ij, double r_ii, double[] r) {
+	public static double offDaigonals(int i, int j, double a_ij, double r_ii, double[] r) {
 
 		double summation = 0;
 
@@ -64,7 +64,7 @@ public class MatrixAlgebra {
 		return (1 / r_ii) * (a_ij - summation);
 	}
 
-	boolean getCholeskyFactorMatrix(double[] values, Matrix4d matrix) {
+	public static boolean getCholeskyFactorMatrix(double[] values, Matrix4d matrix) {
 
 		double[] diagonals = new double[6];
 
@@ -104,7 +104,7 @@ public class MatrixAlgebra {
 
 	}
 
-	Matrix4d forwardSubstitution(Matrix4d a) {
+	public static Matrix4d forwardSubstitution(Matrix4d a) {
 
 		Matrix4d i = Matrix4d.Identity;
 
@@ -138,7 +138,7 @@ public class MatrixAlgebra {
 
 	}
 
-	Matrix4d inverseMatrix(Matrix4d matrix) {
+	public static Matrix4d inverseMatrix(Matrix4d matrix) {
 
 		double[] lowerTriangularMatrixTemp = {
 				0,0,0,0,
