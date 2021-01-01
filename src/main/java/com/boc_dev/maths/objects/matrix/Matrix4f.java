@@ -370,6 +370,18 @@ public class Matrix4f {
 		);
 	}
 
+	public float getTranslationX() {
+		return get(3, 0);
+	}
+
+	public float getTranslationY() {
+		return get(3, 1);
+	}
+
+	public float getTranslationZ() {
+		return get(3, 2);
+	}
+
 	public Matrix4f scale(float s) {
 		return new Matrix4f(
 				get(0,0) * s, get(1,0) * s, get(2,0) * s, get(3,0) * s,
