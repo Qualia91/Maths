@@ -26,7 +26,7 @@ jobs:
       
       
     - name: Lockdown Game Engine Build Dispatch
-      uses: mvasigh/dispatch-action@main
+      uses: mvasigh/dispatch-action@1.1.6
       with:
         # You should create a personal access token and store it in your repository
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
