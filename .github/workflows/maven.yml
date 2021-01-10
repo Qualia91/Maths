@@ -26,8 +26,10 @@ jobs:
       
       
     - name: Lockdown Game Engine Build Dispatch
-      uses: peter-evans/repository-dispatch@v1
+      uses: mvasigh/dispatch-action@main
       with:
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN  }}
-        repo: qualia91/lockdown_game_engine
-        event-type: build_lge
+        # You should create a personal access token and store it in your repository
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        repo: lockdown_game_engine
+        owner: qualia91
+        event_type: build_lge
