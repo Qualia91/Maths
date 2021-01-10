@@ -20,5 +20,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      
+      
+    - name: Lockdown Game Engine Build Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN  }}
+        repo: qualia91/lockdown_game_engine
+        event-type: build_lge
