@@ -26,7 +26,7 @@ jobs:
       
       
     - name: Lockdown Game Engine Build Dispatch
-      uses: peter-evans/repository-dispatch@v1
+      uses: peter-evans/repository-dispatch@v1.1.3
       with:
         # You should create a personal access token and store it in your repository
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
